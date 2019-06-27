@@ -2,8 +2,9 @@
 Application write with Node JS + React JS
 
 # Backend
-Onion architcture, IntersifyJS for handling Dependency Injection. Project created with TypeScript for handling typings.
-Models, Repository, Services, Controlers
+Architecutre: Onion - Models, Repository, Services, Controlers
+IntersifyJS for handling Dependency Injection. Project created with TypeScript for handling typings.
 
 # Frontend 
-React JS + Hooks, Redux, Jest, Enzyme
+Architecture: Flux
+React JS + Hooks, Redux, Jest, Enzyme, SASS modules, TypeScript for handling typings.
