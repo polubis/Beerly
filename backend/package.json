@@ -1,14 +1,13 @@
 {
-  "name": "backend",
+  "name": "beerly-api",
   "version": "1.0.0",
   "description": "",
   "private": true,
-  "main": "index.js",
+  "main": "index.ts",
   "scripts": {
     "tsc": "tsc",
-    "dev": "ts-node-dev --respawn --transpileOnly ./app/app.ts",
-    "prod": "tsc && node ./build/app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "ts-node-dev --respawn --transpileOnly ./src/app.ts",
+    "prod": "tsc && node ./build/app.js"
   },
   "author": "",
   "license": "ISC",
@@ -16,7 +15,8 @@
     "body-parser": "^1.19.0",
     "express": "^4.17.1",
     "inversify": "^5.0.1",
-    "ts-node-dev": "^1.0.0-pre.40"
+    "ts-node-dev": "^1.0.0-pre.40",
+    "typeorm": "^0.2.18"
   },
   "devDependencies": {
     "@types/body-parser": "^1.17.0",
