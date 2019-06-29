@@ -4,7 +4,7 @@ module.exports = (env, { mode }) => {
   console.log(`App is running in ${mode} mode`);
 
   return {
-    entry: './src/index.js',
+    entry: './src/index.tsx',
 
     plugins: [
       new HtmlWebPackPlugin({
@@ -16,7 +16,11 @@ module.exports = (env, { mode }) => {
 
     output: {
       path: __dirname + '/dist',
-      filename: 'bundle.js'
+      filename: 'bundle.min.js'
+    },
+
+    resolve: {
+      extensions: ['.ts', '.tsx', '.js']
     },
 
     module: {
@@ -40,15 +44,14 @@ module.exports = (env, { mode }) => {
             loader: 'babel-loader'
           }
         },
+        { 
+          test: /\.tsx?$/, 
+          loader: 'awesome-typescript-loader'
+        },
         {
-          test: /\.(png|svg|jpg|gif|ico)$/,
-          use: {
-            loader: 'file-loader',
-            options: {
-              name: '[name].[ext]',
-              outputPath: 'images'
-            }
-          }
+          test: /\.(png|svg|jpg|jpeg|gif|ico)$/,
+          exclude: /node_modules/,
+          use: ['file-loader?name=[name].[ext]'],
         },
         {
           test: /\.(config)$/,
