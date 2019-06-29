@@ -1,4 +1,5 @@
 const HtmlWebPackPlugin = require('html-webpack-plugin');
+const InterpolateHtmlPlugin = require('interpolate-html-plugin');
 
 module.exports = (env, { mode }) => {
   console.log(`App is running in ${mode} mode`);
@@ -11,6 +12,9 @@ module.exports = (env, { mode }) => {
         template: './public/index.html',
         favicon: './public/favicon.ico',
         inject: 'body'
+      }),
+      new InterpolateHtmlPlugin({
+        'PUBLIC_URL': 'public'
       })
     ],
 
