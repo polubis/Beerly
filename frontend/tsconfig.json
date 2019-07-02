@@ -5,6 +5,7 @@
     "esModuleInterop": true,
     "allowJs": true,
     "checkJs": true,
+    "noImplicitAny": false,
     "declaration": false,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
@@ -28,5 +29,6 @@
     "isolatedModules": true,
     "noEmit": true
   },
-  "include": ["src", "typings"]
+  "include": ["src", "typings"],
+  "exclude": ["node_modules", "**/*.test.ts"]
 }
