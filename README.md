@@ -5,8 +5,7 @@ Application write with Node JS + React JS
 Architecutre: Onion - Models, Repository, Services, Controlers
 IntersifyJS for handling Dependency Injection. Project created with TypeScript for handling typings.
 To run backend type
-# npm run dev
-# npm run prod
+`npm run tsc` `npm run dev` `npm run prod`
 
 # Frontend 
 Architecture: Flux
