@@ -14,6 +14,8 @@ React JS + Hooks, Redux, Jest, Enzyme, SASS modules, TypeScript for handling typ
 
 # Frontend architecture description
 
-pages - folder which contains all separates views in application. For example Home, Login, Register,
-components - folder which contains all type of components separated by features,
+pages - folder which contains all separates views in application. For example `Home`, `Login`, `Register`
+
+components - folder which contains all type of components separated by features
+
 components/shared - folder for dumb UI components like loaders, modals, forms views, input views and etc...
