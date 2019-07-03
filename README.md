@@ -14,7 +14,7 @@ React JS + Hooks, Redux, Jest, Enzyme, SASS modules, TypeScript for handling typ
 
 # Frontend architecture description
 
-pages - folder which contains all separates views in application. For example `Home`, `Login`, `Register`
+containers - folder which contains core components for app. For example `App`, `Home`, `Login`, `Register`
 **Notation** `ComponentName` - for all components here
 
 components - folder which contains all type of components separated by features
@@ -23,4 +23,4 @@ components - folder which contains all type of components separated by features
 components/shared - folder for dumb UI components like loaders, modals, forms views, input views and etc...
 **Notation** `component-name` - for all components here
 
-__tests__ - folders which exists in all core sub directories like pages, components and etc...
+__tests__ - folders which exists in all core sub directories like containers, components and etc...
