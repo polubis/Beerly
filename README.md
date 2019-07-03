@@ -10,6 +10,7 @@ To run backend type
 # Frontend 
 Architecture: Flux
 React JS + Hooks, Redux, Jest, Enzyme, SASS modules, TypeScript for handling typings.
+`npm start` `npm run build` `npm test` `npm run test-coverage` `npm run test-watch`
 
 # Frontend architecture description
 

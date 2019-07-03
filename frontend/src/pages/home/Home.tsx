@@ -2,11 +2,9 @@ import React from 'react';
 
 import './Home.scss';
 
-class Home extends React.Component {
+class Home extends React.Component<any, any> {
   render() {
-    return (
-      <div id='home-page'></div>
-    );  
+    return <div id="home-page" />;
   }
 }
 
