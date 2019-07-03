@@ -5,7 +5,7 @@ import './Register.scss';
 class Register extends React.Component<any, any> {
   render() {
     return (
-      <div id='register-page'></div>
+      <div id='register-page'>Hello from Register</div>
     );  
   }
 }

@@ -5,7 +5,7 @@ import './Login.scss';
 class Login extends React.Component<any, any> {
   render() {
     return (
-      <div id='login-page'></div>
+      <div id='login-page'>Hello from LogIn</div>
     );  
   }
 }

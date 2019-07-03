@@ -14,13 +14,14 @@ module.exports = (env, { mode }) => {
         inject: 'body'
       }),
       new InterpolateHtmlPlugin({
-        'PUBLIC_URL': 'public'
+        PUBLIC_URL: 'public'
       })
     ],
 
     output: {
       path: __dirname + '/dist',
-      filename: 'bundle.min.js'
+      filename: 'bundle.min.js',
+      publicPath: '/'
     },
 
     resolve: {
@@ -48,14 +49,14 @@ module.exports = (env, { mode }) => {
             loader: 'babel-loader'
           }
         },
-        { 
-          test: /\.tsx?$/, 
+        {
+          test: /\.tsx?$/,
           loader: 'awesome-typescript-loader'
         },
         {
           test: /\.(png|svg|jpg|jpeg|gif|ico)$/,
           exclude: /node_modules/,
-          use: ['file-loader?name=[name].[ext]'],
+          use: ['file-loader?name=[name].[ext]']
         },
         {
           test: /\.(config)$/,
@@ -67,6 +68,10 @@ module.exports = (env, { mode }) => {
           }
         }
       ]
+    },
+
+    devServer: {
+      historyApiFallback: true
     }
   };
 };
