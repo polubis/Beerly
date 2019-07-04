@@ -2,10 +2,10 @@ import React from 'react';
 
 import Logo from '../../../shared/logo/logo';
 
-import './navbar.scss';
+import classes from './navbar.scss';
 
 const Navbar = ({ }): JSX.Element => (
-  <nav className="home-navbar">
+  <nav className={classes.navbar}>
     <Logo />
   </nav>
 );

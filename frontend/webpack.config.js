@@ -1,3 +1,5 @@
+const path = require('path');
+
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 const InterpolateHtmlPlugin = require('interpolate-html-plugin');
 
@@ -22,6 +24,24 @@ module.exports = (env, { mode }) => {
         },
         {
           test: /\.scss$/,
+          exclude: path.resolve(__dirname, 'src/styles/'),
+          use: [
+            'style-loader',
+            'css-modules-typescript-loader',
+            {
+              loader: 'css-loader',
+              options: {
+                sourceMap: true,
+                modules: true,
+                localIdentName: "[local]___[hash:base64:5]"
+              }
+            }, 
+            'sass-loader'
+          ]
+        },
+        {
+          test: /\.scss$/,
+          include: path.resolve(__dirname, 'src/styles/'),
           use: ['style-loader', 'css-loader', 'sass-loader']
         },
         {
@@ -59,7 +79,8 @@ module.exports = (env, { mode }) => {
       })
     ],
     devServer: {
-      historyApiFallback: true
+      historyApiFallback: true,
+      port: 3000
     }
   };
 };
