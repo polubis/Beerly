@@ -1,9 +1,9 @@
 @import './animations.scss';
 @import './colors.scss';
+@import './resets.scss';
 @import './variables.scss';
 
 body {
-  background: red;
-  margin: 0;
-  padding: 0;
+  background: $app-background;
+  font-family: $f-montserrat, 'sans-serif';
 }
