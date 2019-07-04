@@ -1,4 +1,21 @@
 import App from './app';
 
-module.exports = new App().start();
+process.on('uncaughtException', (err: any) => {
+  console.error(`
+  --------------------
+  Unhandled Exception:
+  ${err.message}
+  --------------------
+  `);
+});
 
+process.on('unhandledRejection', (err: any) => {
+  console.error(`
+  --------------------
+  Unhandled Rejection:
+  ${err.message}
+  --------------------
+  `);
+});
+
+module.exports = new App().start();
