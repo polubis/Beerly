@@ -8,9 +8,8 @@ class Home extends React.Component<any, any> {
   render() {
     return (
       <div id="home-page">
-
         <Navbar />
-
+        Home Page
       </div>
     );
   }

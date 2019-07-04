@@ -6,30 +6,24 @@ module.exports = (env, { mode }) => {
 
   return {
     entry: './src/index.tsx',
-
-    plugins: [
-      new HtmlWebPackPlugin({
-        template: './public/index.html',
-        favicon: './public/favicon.ico',
-        inject: 'body'
-      }),
-      new InterpolateHtmlPlugin({
-        PUBLIC_URL: 'public'
-      })
-    ],
-
+    resolve: {
+      extensions: ['.ts', '.tsx', '.js', 'json']
+    },
     output: {
       path: __dirname + '/dist',
       filename: 'bundle.min.js',
       publicPath: '/'
     },
-
-    resolve: {
-      extensions: ['.ts', '.tsx', '.js', 'json']
-    },
-
     module: {
       rules: [
+        {
+          test: /\.tsx?$/,
+          loader: 'awesome-typescript-loader'
+        },
+        {
+          test: /\.scss$/,
+          use: ['style-loader', 'css-loader', 'sass-loader']
+        },
         {
           test: /\.html$/,
           use: [
@@ -37,14 +31,6 @@ module.exports = (env, { mode }) => {
               loader: 'html-loader'
             }
           ]
-        },
-        {
-          test: /\.scss$/,
-          use: ['style-loader', 'css-loader', 'sass-loader']
-        },
-        {
-          test: /\.tsx?$/,
-          loader: 'awesome-typescript-loader'
         },
         {
           test: /\.(png|svg|jpg|jpeg|gif|ico)$/,
@@ -62,7 +48,16 @@ module.exports = (env, { mode }) => {
         }
       ]
     },
-
+    plugins: [
+      new HtmlWebPackPlugin({
+        template: './public/index.html',
+        favicon: './public/favicon.ico',
+        inject: 'body'
+      }),
+      new InterpolateHtmlPlugin({
+        PUBLIC_URL: 'public'
+      })
+    ],
     devServer: {
       historyApiFallback: true
     }

@@ -1,17 +1,11 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
 
 import Home from '../home/Home';
 
-describe('First React component test with Enzyme', () => {
-  it('renders without crashing', () => {
-    const result = shallow(<Home />).contains(<div id="home-page" />);
-    expect(result).toBeTruthy();
-  });
-});
-
-describe('testing jest is working', () => {
-  it('should return true', () => {
-    expect(1).toBe(1);
+describe('<Home />', () => {
+  test('should render component with "Home Page" text', () => {
+    const { getByText } = render(<Home />);
+    expect(getByText('Home Page')).toBeInTheDocument()
   });
 });
