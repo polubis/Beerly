@@ -43,13 +43,6 @@ module.exports = (env, { mode }) => {
           use: ['style-loader', 'css-loader', 'sass-loader']
         },
         {
-          test: /\.(js|jsx)$/,
-          exclude: /node_modules/,
-          use: {
-            loader: 'babel-loader'
-          }
-        },
-        {
           test: /\.tsx?$/,
           loader: 'awesome-typescript-loader'
         },
