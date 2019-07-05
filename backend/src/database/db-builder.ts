@@ -1,6 +1,8 @@
 import dotenv from 'dotenv';
 import { ConnectionOptions } from 'typeorm';
 
+import Entities from '../entities';
+
 interface IDbBuilder {
   createConnectionOptions(): Promise<ConnectionOptions>;
 }
@@ -18,8 +20,8 @@ export default class DbBuilder implements IDbBuilder {
       username: DB_USER,
       password: DB_PASSWORD,
       database: DB_NAME,
-      entities: [],
-      synchronize: true
+      entities: Entities,
+      synchronize: false
     });
   }
 }
