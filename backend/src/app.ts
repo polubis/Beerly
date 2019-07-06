@@ -3,19 +3,17 @@ import bodyParser from 'body-parser';
 import { createConnection, ConnectionOptions } from 'typeorm';
 
 import DbBuilder from './database/db-builder';
-import userController from './controllers/UserController';
 import { parseFailure } from './utils/response-parsers';
+
+import accountController from './controllers/AccountController';
+import userController from './controllers/UserController';
 
 export default class App {
 
   private async init(): Promise<Application> {
     const dbOptions: ConnectionOptions = await new DbBuilder().createConnectionOptions(); // creating connection config based env file
 
-    try {
-      const connection = await createConnection(dbOptions); // connecting to database server
-    } catch (error) {
-      return Promise.reject(error);
-    }
+    await createConnection(dbOptions); // connecting to database server
 
     const app: Application = express();
 
@@ -34,6 +32,7 @@ export default class App {
     });
 
     app.use('/api/user', userController);
+    app.use('/api/account', accountController);
 
     app.use((error: Error, req: Request, res: Response, next: NextFunction) => {
       parseFailure(error, res);

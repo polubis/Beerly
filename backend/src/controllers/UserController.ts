@@ -7,8 +7,8 @@ const userController = express.Router();
 
 userController.get('/:id', async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const user = await userService.getUserById(req.params.id);
-    parseSuccess(req, res, user);
+    const result = await userService.getUserById(req.params.id);
+    parseSuccess(req, res, result);
   } catch (error) {
     return next(error);
   }
