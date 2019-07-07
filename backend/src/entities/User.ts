@@ -1,21 +1,25 @@
-import { Entity, Column } from 'typeorm';
-
-import { Base } from './Base';
+import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('User')
-export class User extends Base {
+export class User {
+  @PrimaryGeneratedColumn()
+  public id: number;
+
   @Column({
     length: 50
   })
   public username: string;
 
-  @Column({
-    length: 100
-  })
-  public email: string;
+  @Column()
+  public modificationDate: Date;
 
   @Column({
-    length: 200
+    nullable: true
   })
-  public passwordHash: string;
+  public dateOfBirth: Date;
+
+  @Column({
+    nullable: true
+  })
+  public avatar: string;
 }

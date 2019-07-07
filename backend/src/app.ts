@@ -1,25 +1,62 @@
 import express, { Application, Request, Response, NextFunction } from 'express';
 import bodyParser from 'body-parser';
-import { createConnection, ConnectionOptions } from 'typeorm';
+import passport from 'passport';
+import { Strategy as LocalStrategy } from 'passport-local';
 
 import DbBuilder from './database/db-builder';
+import SessionProvider from './database/session-provider';
+import payloadValidation from './middleware/payload-validation';
 import { parseFailure } from './utils/response-parsers';
 
-import accountController from './controllers/AccountController';
-import userController from './controllers/UserController';
+import accountsController from './controllers/AccountsController';
+import authorizationController from './controllers/AuthorizationController';
+import usersController from './controllers/UsersController';
+import accountsService from './services/AccountsService';
+import { BadRequest } from './utils/exceptions';
 
 export default class App {
-
   private async init(): Promise<Application> {
-    const dbOptions: ConnectionOptions = await new DbBuilder().createConnectionOptions(); // creating connection config based env file
+    passport.use(
+      new LocalStrategy(
+        { usernameField: 'email' },
+        async (email: string, password: string, done) => {
+          const user = await accountsService.getAccount(email);
+          if (!user) {
+            return done(new BadRequest('Invalid authorization credentials'));
+          }
 
-    await createConnection(dbOptions); // connecting to database server
+          const isAuthorized = await accountsService.checkPassword(password, user.password);
+
+          if (!isAuthorized) {
+            return done(new BadRequest('Invalid authorization credentials'));
+          }
+
+          return done(undefined, user);
+        }
+      )
+    );
+
+    passport.serializeUser((user: any, done) => {
+      return done(undefined, user.id);
+    });
+
+    passport.deserializeUser((id: number, done) => {
+      return done(undefined, id);
+    });
+
+    const db = new DbBuilder();
+    db.createConnection();
 
     const app: Application = express();
 
     app.set('port', process.env.PORT || 3000);
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: true }));
+
+    app.use(SessionProvider.handleSession(process.env.SESSION_SECRET, db.connectionOptions));
+
+    app.use(passport.initialize());
+    app.use(passport.session());
 
     app.use((req: Request, res: Response, next: NextFunction) => {
       res.setHeader('Access-Control-Allow-Origin', '*');
@@ -31,8 +68,11 @@ export default class App {
       next();
     });
 
-    app.use('/api/user', userController);
-    app.use('/api/account', accountController);
+    app.use(payloadValidation);
+
+    app.use('/api/accounts', accountsController);
+    app.use('/api/auth', authorizationController);
+    app.use('/api/users', usersController);
 
     app.use((error: Error, req: Request, res: Response, next: NextFunction) => {
       parseFailure(error, res);
