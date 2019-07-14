@@ -7,6 +7,7 @@ module.exports = (env, { mode }) => {
   console.log(`App is running in ${mode} mode`);
 
   return {
+    devtool: 'eval-source-map',
     entry: './src/index.tsx',
     resolve: {
       extensions: ['.ts', '.tsx', '.js', 'json']
