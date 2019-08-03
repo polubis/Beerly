@@ -1,8 +1,18 @@
+@import '../../../styles/variables.scss';
+@import '../../../styles/colors.scss';
+
 .logo {
   display: flex;
   align-items: center;
 
+  svg path {
+    fill: $main;
+  }
+
   &_name {
     margin-left: 20px;
+    font-weight: $f-semi-bold;
+    font-size: $fs-medium;
+    color: $main;
   }
 }

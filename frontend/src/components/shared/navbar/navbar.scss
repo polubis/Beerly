@@ -1,0 +1,103 @@
+@import '../../../styles/colors.scss';
+@import '../../../styles/media.scss';
+@import '../../../styles/variables.scss';
+
+/* --- HELPERS --- */
+
+.divider {
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    height: 32px;
+    width: 1px;
+    background: $main;
+    left: -50px;
+    top: 0;
+    bottom: 0;
+    margin: auto 0;
+  }
+}
+
+.link--hover {
+  @media #{$desktop-only} {
+    position: relative;
+    &::after {
+      content: '';
+      position: absolute;
+      top: -10px;
+      background: $red;
+      height: 2px;
+      width: 80%;
+      margin: 0 auto;
+      left: 0;
+      opacity: 0;
+      transition: $fast opacity;
+      will-change: opacity;
+      right: 0;
+    }
+    &:hover::after {
+      opacity: 1;
+    }
+  }
+}
+
+/* --- END HELPERS --- */
+
+.navbar {
+  /* --- LAYOUT MEDIA --- */
+
+  @media #{$desktop-only} {
+    width: 1280px;
+  }
+
+  /* --- END LAYOUT MEDIA --- */
+
+  height: 100px;
+  display: flex;
+  align-items: center;
+  margin: 0 auto;
+
+  .links {
+    a {
+      font-size: $fs-medium;
+      font-weight: $f-medium;
+    }
+
+    &:first-of-type {
+      margin: 0 auto 0 50px;
+
+      a {
+        @extend .link--hover;
+        &:not(:last-of-type) {
+          margin-right: 50px;
+        }
+
+        &:nth-of-type(1) {
+          margin-left: 50px;
+          @extend .divider;
+        }
+        &:nth-of-type(3) {
+          @extend .divider;
+          margin-left: 50px;
+        }
+      }
+    }
+
+    &:last-of-type {
+      margin-left: auto;
+
+      a:first-of-type {
+        padding: 11px 28px;
+        background: $main;
+        color: $white;
+        border-radius: 39px;
+        margin-right: 50px;
+      }
+      a:last-of-type {
+        @extend .link--hover;
+      }
+    }
+  }
+}
