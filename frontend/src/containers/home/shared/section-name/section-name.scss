@@ -1,0 +1,34 @@
+@import '../../../../styles/colors.scss';
+@import '../../../../styles/variables.scss';
+
+$fs-section-big: 42px;
+$fs-section-medium: 24px;
+
+.section-name {
+  display: flex;
+  flex-flow: column;
+  margin-bottom: 50px;
+
+  span {
+    display: flex;
+    align-items: center;
+    font-size: $fs-section-medium;
+    font-weight: $f-medium;
+
+    &::before {
+      content: '';
+      display: block;
+      width: 30px;
+      background: $main;
+      margin-right: 22px;
+      height: 1px;
+    }
+  }
+
+  h5 {
+    color: $main;
+    margin-top: 20px;
+    font-size: $fs-section-big;
+    font-weight: $f-bold;
+  }
+}
