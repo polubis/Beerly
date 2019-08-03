@@ -4,7 +4,7 @@ import AccessIcon from '@material-ui/icons/accessibility';
 import SearchIcon from '@material-ui/icons/Search';
 import StarIcon from '@material-ui/icons/StarBorder';
 
-import JumboGraphic from './jumbo-graphic';
+import JumboGraphic from './jumbo-graphic/jumbo-graphic';
 import SectionName from '../shared/section-name/section-name';
 import { colors } from 'src/constants';
 
@@ -20,7 +20,7 @@ const Jumbo = ({}) => {
           color={colors.main}
         />
         <ul>
-          <svg width="500" height="181.25" viewBox="0 0 526.653 181.25">
+          <svg height="181.25" viewBox="0 0 526.653 181.25">
             <path
               d="M6193.377,0l203.341,181.25L6720.03,0Z"
               transform="translate(-6193.377)"
@@ -37,7 +37,7 @@ const Jumbo = ({}) => {
             <button>
               <SearchIcon />
             </button>
-            <span>find your favourites beers</span>
+            <span>find your favourite beers</span>
           </li>
           <li>
             <button>

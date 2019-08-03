@@ -46,14 +46,6 @@
 /* --- END HELPERS --- */
 
 .navbar {
-  /* --- LAYOUT MEDIA --- */
-
-  @media #{$desktop-only} {
-    width: 1280px;
-  }
-
-  /* --- END LAYOUT MEDIA --- */
-
   height: 100px;
   display: flex;
   align-items: center;
@@ -100,4 +92,44 @@
       }
     }
   }
+
+  .mobile-nav-btn {
+    display: none;
+  }
+
+  /* --- MEDIA --- */
+
+  @media #{$desktop-only} {
+    width: 1280px;
+  }
+
+  @media #{$not-desktop} {
+    padding: 0 35px;
+  }
+
+  @media #{$tablet-only} {
+    .links {
+      display: none;
+    }
+
+    .mobile-nav-btn {
+      display: block;
+      padding: 15px;
+      margin-left: auto;
+      transform: translateX(15px);
+    }
+
+    .mobile-nav {
+      position: fixed;
+      z-index: 1;
+      height: 100vh;
+      background: $main;
+      color: $white;
+      width: 100vw;
+      top: 0;
+      left: 0;
+    }
+  }
+
+  /* --- END MEDIA --- */
 }

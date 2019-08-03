@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Navbar from 'components/shared/navbar/Navbar';
+import Navbar from 'components/shared/navbar/navbar';
 import Jumbo from './jumbo/jumbo';
 
 import classes from './Home.scss';

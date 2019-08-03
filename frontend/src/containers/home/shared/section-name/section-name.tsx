@@ -11,7 +11,7 @@ type SectionNameProps = {
 const SectionName = ({ title, description, color }: SectionNameProps) => (
   <div style={{ color }} className={classes['section-name']}>
     <span>{title}</span>
-    <h5>{description}</h5>
+    <h5 dangerouslySetInnerHTML={{__html: description}}></h5>
   </div>
 );
 

@@ -13,6 +13,7 @@
 /* --- END HELPERS --- */
 
 .jumbo {
+  min-height: calc(100vh - 200px); // navbar = 100px, space for next section = 100px
   margin: 0 auto;
   @extend .perf-flex;
   justify-content: space-between;
@@ -36,6 +37,7 @@
           width: 50px;
           height: 50px;
           border-radius: 50px;
+          flex-shrink: 0;
           background: $main;
           margin-right: 22px;
           color: $white;
@@ -50,18 +52,39 @@
         }
       }
 
-      svg {
+      & > svg {
         position: absolute;
+        z-index: -1;
+        width: 100%;
+        left: 0;
       }
     }
   }
 
-  /* --- LAYOUT MEDIA --- */
+  /* --- MEDIA --- */
 
   @media #{$desktop-only} {
     width: 1280px;
-    height: calc(100vh - 200px); // navbar = 100px, space for next section = 100px
   }
 
-  /* --- END LAYOUT MEDIA --- */
+  @media #{$not-desktop} {
+    padding: 0 35px;
+
+    &__text {
+      margin-right: 100px;
+    }
+  }
+
+  @media #{$tablet-only} {
+    padding: 100px 35px;
+    flex-flow: column;
+    width: 100%;
+
+    &__text {
+      margin: 0 0 80px 0;
+      width: 100%;
+    }
+  }
+
+  /* --- END MEDIA --- */
 }
