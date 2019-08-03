@@ -1,8 +1,14 @@
 module.exports = {
-  roots: ['<rootDir>/src'],
-  transform: {
-    '^.+\\.tsx?$': 'ts-jest'
-  },
-  snapshotSerializers: ['enzyme-to-json/serializer'],
-  setupFilesAfterEnv: ['<rootDir>/src/setupEnzyme.ts']
+    roots: ['<rootDir>/src'],
+    transform: {
+        '\\.(ts|tsx)?$': 'ts-jest',
+    },
+    moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
+    moduleNameMapper: {
+      "^.+\\.(css|less|scss)$": "identity-obj-proxy"
+    },
+    testPathIgnorePatterns: ['/node_modules/', '/public/'],
+    setupFilesAfterEnv: [
+      '<rootDir>/config/setup.jest.ts'
+    ]
 };

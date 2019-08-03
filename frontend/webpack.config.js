@@ -1,3 +1,5 @@
+const path = require('path');
+
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 const InterpolateHtmlPlugin = require('interpolate-html-plugin');
 
@@ -5,31 +7,44 @@ module.exports = (env, { mode }) => {
   console.log(`App is running in ${mode} mode`);
 
   return {
+    devtool: 'eval-source-map',
     entry: './src/index.tsx',
-
-    plugins: [
-      new HtmlWebPackPlugin({
-        template: './public/index.html',
-        favicon: './public/favicon.ico',
-        inject: 'body'
-      }),
-      new InterpolateHtmlPlugin({
-        PUBLIC_URL: 'public'
-      })
-    ],
-
+    resolve: {
+      extensions: ['.ts', '.tsx', '.js', 'json']
+    },
     output: {
       path: __dirname + '/dist',
       filename: 'bundle.min.js',
       publicPath: '/'
     },
-
-    resolve: {
-      extensions: ['.ts', '.tsx', '.js', 'json']
-    },
-
     module: {
       rules: [
+        {
+          test: /\.tsx?$/,
+          loader: 'awesome-typescript-loader'
+        },
+        {
+          test: /\.scss$/,
+          exclude: path.resolve(__dirname, 'src/styles/'),
+          use: [
+            'style-loader',
+            'css-modules-typescript-loader',
+            {
+              loader: 'css-loader',
+              options: {
+                sourceMap: true,
+                modules: true,
+                localIdentName: "[local]___[hash:base64:5]"
+              }
+            }, 
+            'sass-loader'
+          ]
+        },
+        {
+          test: /\.scss$/,
+          include: path.resolve(__dirname, 'src/styles/'),
+          use: ['style-loader', 'css-loader', 'sass-loader']
+        },
         {
           test: /\.html$/,
           use: [
@@ -37,14 +52,6 @@ module.exports = (env, { mode }) => {
               loader: 'html-loader'
             }
           ]
-        },
-        {
-          test: /\.scss$/,
-          use: ['style-loader', 'css-loader', 'sass-loader']
-        },
-        {
-          test: /\.tsx?$/,
-          loader: 'awesome-typescript-loader'
         },
         {
           test: /\.(png|svg|jpg|jpeg|gif|ico)$/,
@@ -62,9 +69,19 @@ module.exports = (env, { mode }) => {
         }
       ]
     },
-
+    plugins: [
+      new HtmlWebPackPlugin({
+        template: './public/index.html',
+        favicon: './public/favicon.ico',
+        inject: 'body'
+      }),
+      new InterpolateHtmlPlugin({
+        PUBLIC_URL: 'public'
+      })
+    ],
     devServer: {
-      historyApiFallback: true
+      historyApiFallback: true,
+      port: 3000
     }
   };
 };

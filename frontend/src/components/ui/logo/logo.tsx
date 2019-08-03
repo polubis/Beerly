@@ -1,9 +1,9 @@
 import React from 'react';
 
-import './logo.scss';
+import classes from './logo.scss';
 
 const Logo = ({}): JSX.Element => (
-  <div className="logo">
+  <div className={classes.logo}>
     <svg width="12" height="44.81" viewBox="0 0 12 44.81">
       <g transform="translate(-319.715 -30)">
         <path
@@ -21,7 +21,7 @@ const Logo = ({}): JSX.Element => (
       </g>
     </svg>
 
-    <span className="logo__name">Beerly</span>
+    <span className={classes.logo_name}>Beerly</span>
   </div>
 );
 

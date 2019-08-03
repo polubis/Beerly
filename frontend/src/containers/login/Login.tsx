@@ -1,11 +1,11 @@
 import React from 'react';
 
-import './Login.scss';
+import classes from './Login.scss';
 
 class Login extends React.Component<any, any> {
   render() {
     return (
-      <div id='login-page'>Hello from LogIn</div>
+      <div id='login-page' className={classes.login}>Hello from LogIn</div>
     );  
   }
 }
