@@ -26,7 +26,12 @@
     "skipLibCheck": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "noEmit": true
+    "noEmit": true,
+    "baseUrl": ".",
+    "paths": {
+      "components/*": ["src/components/*"],
+      "ui/*": ["src/components/ui/*"]
+    }
   },
   "include": ["src", "typings", "config/setup.jest.ts"],
   "exclude": ["node_modules", "**/*.test.ts"]

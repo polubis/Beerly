@@ -1,5 +1,6 @@
 const path = require('path');
 
+const { TsConfigPathsPlugin } = require('awesome-typescript-loader');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 const InterpolateHtmlPlugin = require('interpolate-html-plugin');
 
@@ -10,7 +11,10 @@ module.exports = (env, { mode }) => {
     devtool: 'eval-source-map',
     entry: './src/index.tsx',
     resolve: {
-      extensions: ['.ts', '.tsx', '.js', 'json']
+      extensions: ['.ts', '.tsx', '.js', 'json'],
+      plugins: [
+        new TsConfigPathsPlugin()
+      ]
     },
     output: {
       path: __dirname + '/dist',
@@ -36,7 +40,7 @@ module.exports = (env, { mode }) => {
                 modules: true,
                 localIdentName: "[local]___[hash:base64:5]"
               }
-            }, 
+            },
             'sass-loader'
           ]
         },
