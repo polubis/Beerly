@@ -1,3 +1,5 @@
+@import './variables.scss';
+
 body {
   margin: 0;
   padding: 0;
@@ -7,13 +9,19 @@ body {
     color: inherit;
   }
 
+  b {
+    font-weight: $f-regular;
+  }
+
+  p,
   h1,
   h2,
   h3,
   h4,
   h5,
   ul,
-  ol {
+  ol,
+  figure {
     margin: 0;
     padding: 0;
   }
@@ -21,13 +29,20 @@ body {
   ul {
     list-style-type: none;
   }
-  
+
   button {
-    border: none;
-    cursor: pointer;
+    font-family: $f-montserrat, 'sans-serif';
     background: none;
+    border: none;
+    display: block;
+    cursor: pointer;
+
     &:focus {
       outline: none;
+    }
+
+    &:disabled {
+      cursor: initial;
     }
   }
 }

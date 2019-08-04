@@ -31,7 +31,8 @@
     "paths": {
       "components/*": ["src/components/*"],
       "ui/*": ["src/components/ui/*"],
-      "src/*": ["src/*"],
+      "services/*": ["src/api/services/*"],
+      "models/*": ["src/models/*"],
     }
   },
   "include": ["src", "typings", "config/setup.jest.ts"],

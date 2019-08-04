@@ -1,0 +1,77 @@
+@import '../../../styles/colors.scss';
+@import '../../../styles/variables.scss';
+
+.users {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  grid-gap: 35px;
+  width: 1280px;
+  margin: 0 auto;
+  padding: 0 35px;
+
+  .tile {
+    background: $white;
+    box-shadow: $thin-shadow;
+    max-width: 100%;
+    padding: 22px 0 16px 22px;
+    height: 440px;
+    border-radius: 4px;
+    display: flex;
+    flex-flow: column;
+
+    header {
+      display: flex;
+      align-items: center;
+
+      .personality {
+        margin-left: 20px;
+        display: flex;
+
+        span {
+          font-size: 18px;
+          font-weight: $f-medium;
+
+          &:first-of-type {
+            margin-right: 5px;
+          }
+        }
+      }
+    }
+
+    p {
+      margin: 20px 0;
+      font-size: 16px;
+    }
+
+    ul {
+      display: flex;
+      flex-flow: column;
+
+      li {
+        display: flex;
+        margin-bottom: 15px;
+        align-items: center;
+
+        .beer-name-rate {
+          border-left: 1px solid $main;
+          margin-left: 8px;
+          padding: 0 20px;
+
+          span {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: $f-medium;
+          }
+        }
+      }
+    }
+
+    .profile {
+      color: $red;
+      padding: 8px 24px;
+      font-weight: $f-medium;
+      margin: auto 0 0 auto;
+      font-size: 15px;
+    }
+  }
+}

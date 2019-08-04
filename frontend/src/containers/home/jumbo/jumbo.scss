@@ -13,7 +13,8 @@
 /* --- END HELPERS --- */
 
 .jumbo {
-  min-height: calc(100vh - 200px); // navbar = 100px, space for next section = 100px
+  min-height: calc(100vh - 150px); // navbar = 100px, space for next section = 50px
+  padding: 100px 35px;
   margin: 0 auto;
   @extend .perf-flex;
   justify-content: space-between;
@@ -68,15 +69,12 @@
   }
 
   @media #{$not-desktop} {
-    padding: 0 35px;
-
     &__text {
       margin-right: 100px;
     }
   }
 
   @media #{$tablet-only} {
-    padding: 100px 35px;
     flex-flow: column;
     width: 100%;
 

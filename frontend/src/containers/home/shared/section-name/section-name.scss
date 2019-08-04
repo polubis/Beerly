@@ -9,24 +9,22 @@ $fs-section-medium: 24px;
   flex-flow: column;
   margin-bottom: 50px;
 
-  span {
+  &__title {
     display: flex;
     align-items: center;
     font-size: $fs-section-medium;
     font-weight: $f-medium;
-
-    &::before {
+    
+    .marker {
       content: '';
       display: block;
       width: 30px;
-      background: $main;
       margin-right: 22px;
       height: 1px;
     }
   }
 
   h5 {
-    color: $main;
     margin-top: 20px;
     font-size: $fs-section-big;
     font-weight: $f-bold;

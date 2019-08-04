@@ -10,7 +10,7 @@ import { colors } from 'src/constants';
 
 import classes from './jumbo.scss';
 
-const Jumbo = ({}) => {
+const Jumbo = () => {
   return (
     <section className={classes.jumbo}>
       <div className={classes.jumbo__text}>
