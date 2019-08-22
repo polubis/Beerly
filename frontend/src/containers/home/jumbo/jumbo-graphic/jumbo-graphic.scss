@@ -3,7 +3,7 @@
 .jumbo-graphic {
   width: 643px;
 
-  @media #{$tablet-only} {
+  @media #{$tablet-and-mobile} {
     width: 100%;
   }
 }

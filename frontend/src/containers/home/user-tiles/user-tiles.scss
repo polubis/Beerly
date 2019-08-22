@@ -1,13 +1,23 @@
 @import '../../../styles/colors.scss';
+@import '../../../styles/media.scss';
 @import '../../../styles/variables.scss';
 
 .users {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
   grid-gap: 35px;
-  width: 1280px;
   margin: 0 auto;
   padding: 0 35px;
+  grid-template-columns: 1fr 1fr;
+
+  @media #{$desktop-only} {
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    width: 1280px;
+  }
+
+  @media #{$tablet-and-mobile} {
+    grid-template-columns: minmax(350px, 500px);
+    justify-content: center;
+  }
 
   .tile {
     background: $white;

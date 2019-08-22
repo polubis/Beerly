@@ -74,7 +74,7 @@
     }
   }
 
-  @media #{$tablet-only} {
+  @media #{$tablet-and-mobile} {
     flex-flow: column;
     width: 100%;
 
