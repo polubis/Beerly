@@ -1,6 +1,7 @@
 import React from 'react';
 
 import BeersSlider from './beers-slider/beers-slider';
+import InfoSection from './info-section/info-section';
 import Jumbo from './jumbo/jumbo';
 import Meetings from './meetings/meetings';
 import Navbar from 'components/shared/navbar/navbar';
@@ -51,6 +52,8 @@ class Home extends React.Component<any, any> {
           </div>
 
           <Meetings />
+
+          <InfoSection />
         </main>
       </div>
     );

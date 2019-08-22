@@ -1,0 +1,66 @@
+@import '../../../styles/colors.scss';
+@import '../../../styles/variables.scss';
+
+.info {
+  background: $light-blue;
+  border-top: 1px solid $medium-blue;
+  border-bottom: 1px solid $medium-blue;
+
+  div {
+    color: $main;
+    padding: 50px;
+    text-align: center;
+
+    h5 {
+      font-size: 24px;
+      display: flex;
+      align-items: center;
+      font-weight: $f-regular;
+      margin-bottom: 50px;
+      justify-content: center;
+
+      &::before,
+      &::after {
+        content: '';
+        display: block;
+        width: 20px;
+        height: 1px;
+        background: $main;
+      }
+
+      &::before {
+        margin-right: 20px;
+      }
+
+      &::after {
+        margin-left: 20px;
+      }
+    }
+
+    p {
+      font-size: 18px;
+      line-height: 30px;
+      color: $grey;
+      &:not(:last-of-type) {
+        margin-bottom: 20px;
+      }
+    }
+
+    .divider {
+      background: $main;
+      height: 1px;
+      width: 60px;
+      display: block;
+      margin: 50px auto;
+    }
+
+    button {
+      margin: 0 auto;
+      color: $red;
+      border: 1px solid $red;
+      border-radius: 2px;
+      padding: 10px 20px;
+      font-size: 14px;
+    }
+  }
+}
