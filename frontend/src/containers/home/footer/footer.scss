@@ -1,0 +1,11 @@
+@import '../../../styles/colors.scss';
+
+.footer {
+  background: $black;
+
+  .content {
+    margin: 0 auto;
+    padding: 80px 50px 50px 50px;
+    width: 1280px;
+  }
+}
