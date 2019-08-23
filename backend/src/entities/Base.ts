@@ -5,8 +5,8 @@ export abstract class Base {
   public id: number;
 
   @Column()
-  public creationDate: string;
+  public creationDate: Date = new Date();
 
   @Column()
-  public modificationDate: string;
+  public modificationDate: Date = new Date();
 }

@@ -1,5 +1,8 @@
 import 'reflect-metadata';
+import dotenv from 'dotenv';
 import App from './app';
+
+dotenv.config();
 
 process.on('uncaughtException', (err: any) => {
   console.error(`

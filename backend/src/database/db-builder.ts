@@ -1,19 +1,18 @@
-import dotenv from 'dotenv';
-import { ConnectionOptions } from 'typeorm';
+import { ConnectionOptions, createConnection, Connection } from 'typeorm';
 
 import Entities from '../entities';
 
-interface IDbBuilder {
-  createConnectionOptions(): Promise<ConnectionOptions>;
-}
+export default class DbBuilder {
+  public connection: Connection;
+  public connectionOptions: ConnectionOptions;
 
-export default class DbBuilder implements IDbBuilder {
-  public async createConnectionOptions(): Promise<ConnectionOptions> {
-    dotenv.config();
+  constructor() {
+    this.createConnectionOptions();
+  }
 
+  private createConnectionOptions(): void {
     const { DB_HOST, DB_PORT, DB_USER, DB_PASSWORD, DB_NAME } = process.env as any;
-
-    return Promise.resolve({
+    this.connectionOptions = {
       type: 'mysql',
       host: DB_HOST,
       port: +DB_PORT,
@@ -22,6 +21,10 @@ export default class DbBuilder implements IDbBuilder {
       database: DB_NAME,
       entities: Entities,
       synchronize: false
-    });
+    };
   }
+
+  public createConnection = async () => {
+    this.connection = await createConnection(this.connectionOptions);
+  };
 }
