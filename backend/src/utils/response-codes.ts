@@ -1,11 +1,3 @@
-export const restSuccessResponseCodes: { [key: string]: number } = {
-  GET: 200,
-  POST: 201,
-  PUT: 202,
-  PATCH: 203,
-  DELETE: 204
-};
-
 export const restFailureResponseCodes = {
   BAD_REQUEST: 400,
   UNAUTHORIZED: 401,

@@ -1,10 +1,10 @@
 import { Request, Response } from 'express';
 
-import { restSuccessResponseCodes, restFailureResponseCodes } from './response-codes';
+import { restFailureResponseCodes } from './response-codes';
 import { NotFound, BadRequest, Unauthorized, Conflict } from './exceptions';
 
 export const parseSuccess = <T>(req: Request, res: Response, result: T | T[]) => {
-  return res.status(restSuccessResponseCodes[req.method]).json({
+  return res.status(200).json({
     data: result,
     error: ''
   });
@@ -33,6 +33,6 @@ export const parseFailure = (err: Error, res: Response) => {
   }
 
   return res.status(restFailureResponseCodes.INTERNAL_ERROR).json({
-    error: 'Internal server error, try again later'
+    error: err.message || 'Internal server error, try again later'
   });
 };

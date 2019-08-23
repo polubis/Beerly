@@ -1,15 +1,15 @@
 import { getCustomRepository } from 'typeorm';
 
-import { UserRepository } from '../repositories/UserRepository';
+import { UsersRepository } from '../repositories/UsersRepository';
 import { NotFound } from '../utils/exceptions';
 
-interface IUserService {
+interface IUsersService {
   getUserById: (id: number) => Promise<{ id: number }>;
 }
 
-class UserService implements IUserService {
+class UsersService implements IUsersService {
   public getUserById = async (id: number) => {
-    const userRepository = getCustomRepository(UserRepository);
+    const userRepository = getCustomRepository(UsersRepository);
 
     const user = await userRepository.findById(id);
 
@@ -21,4 +21,4 @@ class UserService implements IUserService {
   };
 }
 
-export default new UserService();
+export default new UsersService();
