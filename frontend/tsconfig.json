@@ -32,6 +32,7 @@
       "components/*": ["src/components/*"],
       "ui/*": ["src/components/ui/*"],
       "services/*": ["src/api/services/*"],
+      "helpers/*": ["src/helpers/*"],
       "models/*": ["src/models/*"],
     }
   },
