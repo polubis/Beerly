@@ -17,7 +17,7 @@ export type StyledMeeting = {
 };
 
 type MeetingsFacadeProps = {
-  children: (meetings: StyledMeeting[], loadMore: () => void, isLoading: boolean) => JSX.Element;
+  children: (state: MeetingsFacadeState, loadMoreMeetings: () => void) => JSX.Element;
 };
 
 type MeetingsFacadeState = {
@@ -98,13 +98,9 @@ export default class MeetingsFacade extends React.Component<
     this.clicked$.unsubscribe();
   }
 
-  loadMore = (): void => {
-    if (!this.state.isLoading) {
-      this.clicked.next();
-    }
+  loadMoreMeetings = (): void => {
+    this.state.isLoading || this.clicked.next();
   };
 
-  render() {
-    return this.props.children(this.state.meetings, this.loadMore, this.state.isLoading);
-  }
+  render = () => this.props.children(this.state as MeetingsFacadeState, this.loadMoreMeetings);
 }
