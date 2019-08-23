@@ -2,7 +2,9 @@
 // Please do not change this file!
 interface CssExports {
   'logo': string;
-  'logo_name': string;
+  'logo--default': string;
+  'logo--light': string;
+  'name': string;
 }
 declare var cssExports: CssExports;
 export = cssExports;

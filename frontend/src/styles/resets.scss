@@ -30,16 +30,19 @@ body {
     list-style-type: none;
   }
 
+  button,
+  input {
+    &:focus {
+      outline: none;
+    }
+  }
+
   button {
     font-family: $f-montserrat, 'sans-serif';
     background: none;
     border: none;
     display: block;
     cursor: pointer;
-
-    &:focus {
-      outline: none;
-    }
 
     &:disabled {
       cursor: initial;

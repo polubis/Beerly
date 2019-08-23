@@ -5,14 +5,29 @@
   display: flex;
   align-items: center;
 
-  svg path {
-    fill: $main;
-  }
-
-  &_name {
+  .name {
     margin-left: 20px;
     font-weight: $f-semi-bold;
     font-size: 16px;
-    color: $main;
+  }
+
+  &--default {
+    rect {
+      fill: $app-background;
+    }
+    path,
+    .name {
+      fill: $main;
+    }
+  }
+
+  &--light {
+    rect {
+      fill: $black;
+    }
+    path,
+    .name {
+      fill: $white;
+    }
   }
 }
