@@ -5,8 +5,8 @@
 .form-field {
   display: flex;
   flex-flow: column;
-  margin-bottom: 7%;
   color: $main;
+  position: relative;
 
   .title {
     font-size: 0.9rem;
@@ -16,10 +16,22 @@
   .input-wrapper {
     border-bottom: 1px solid $grey;
     display: flex;
-    margin: 2% 0 3.5% 0;
+    margin-top: 2%;
     padding-bottom: 1.5%;
     position: relative;
     overflow: hidden;
+
+    &.invalid {
+      border-bottom-color: $red;
+
+      .overlay {
+        background: $red;
+      }
+
+      .icon {
+        color: $red;
+      }
+    }
 
     .overlay {
       position: absolute;
@@ -28,7 +40,7 @@
       width: 100%;
       background: $main;
       height: 1px;
-      transform: translateX(-100%);
+      transform: translateX(-101%);
       transition: $fast transform $transition;
       will-change: transform;
     }
@@ -56,5 +68,14 @@
         font-size: $f-light;
       }
     }
+  }
+
+  .validation-message {
+    color: $red;
+    font-size: 14px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
   }
 }

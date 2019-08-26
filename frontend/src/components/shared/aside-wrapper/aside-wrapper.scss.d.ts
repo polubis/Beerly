@@ -6,6 +6,7 @@ interface CssExports {
   'copyright': string;
   'divider': string;
   'links': string;
+  'logo': string;
 }
 declare var cssExports: CssExports;
 export = cssExports;

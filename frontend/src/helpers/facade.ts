@@ -5,10 +5,10 @@ export class FacadeState<T = unknown> {
   constructor(public data: T | null | [], public isLoading = true, public error = '') {}
 }
 
-export interface FacadeProps<T = unknown> {
+export type FacadeProps<T = unknown> = {
   initData: T | [] | null;
   getData: Observable<T>;
-}
+};
 
 export const useFacade = <T extends any>({
   initData,

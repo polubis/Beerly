@@ -1,17 +1,22 @@
 // GENERAL
 
-$app-background: #FFFCF9;
+$app-background: #fffcf9;
 $white: #fff;
-$main: #3F3D56;
-$black: #1E1E1E;
-$red: #B61D23;
-$orange: #FFB974;
+$main: #3f3d56;
+$dark-main: #2d2b46;
+$black: #1e1e1e;
+$red: #b61d23;
+$light-red: #de656a;
+$orange: #ffb974;
 $grey: #707070;
-$light-blue: #F9F9F9;
-$medium-blue: #E3E8F4;
-$disabled-font: #A1A1A1;
+$light-blue: #f9f9f9;
+$medium-blue: #e3e8f4;
+$disabled-font: #a1a1a1;
+$disabled-bg: #919194;
+$dark-backdrop: rgba(0, 0, 0, 0.44);
 
 // SHADOWS
 
 $bold-shadow: 0 6px 24px rgba(0, 0, 0, 0.16);
+$text-shadow: 0 3px 6px rgb(0, 0, 0);
 $thin-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);

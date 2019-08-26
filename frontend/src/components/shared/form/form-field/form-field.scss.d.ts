@@ -4,8 +4,10 @@ interface CssExports {
   'form-field': string;
   'icon': string;
   'input-wrapper': string;
+  'invalid': string;
   'overlay': string;
   'title': string;
+  'validation-message': string;
 }
 declare var cssExports: CssExports;
 export = cssExports;

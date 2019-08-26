@@ -1,12 +1,5 @@
 @import '../../styles/colors.scss';
 
-.register {
-  min-height: 100vh;
+.container {
   display: flex;
-  justify-content: flex-start;
-
-  .image-section {
-    width: 60%;
-    margin-right: 40%;
-  }
 }
