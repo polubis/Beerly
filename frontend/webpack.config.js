@@ -12,9 +12,7 @@ module.exports = (env, { mode }) => {
     entry: './src/index.tsx',
     resolve: {
       extensions: ['.ts', '.tsx', '.js', 'json'],
-      plugins: [
-        new TsConfigPathsPlugin()
-      ]
+      plugins: [new TsConfigPathsPlugin()]
     },
     output: {
       path: __dirname + '/dist',
@@ -38,7 +36,7 @@ module.exports = (env, { mode }) => {
               options: {
                 sourceMap: true,
                 modules: true,
-                localIdentName: "[local]___[hash:base64:5]"
+                localIdentName: '[local]___[hash:base64:5]'
               }
             },
             'sass-loader'

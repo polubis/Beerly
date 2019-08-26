@@ -1,0 +1,60 @@
+@import '../../../../styles/colors.scss';
+@import '../../../../styles/media.scss';
+@import '../../../../styles/variables.scss';
+
+.form-field {
+  display: flex;
+  flex-flow: column;
+  margin-bottom: 7%;
+  color: $main;
+
+  .title {
+    font-size: 0.9rem;
+    font-weight: $f-medium;
+  }
+
+  .input-wrapper {
+    border-bottom: 1px solid $grey;
+    display: flex;
+    margin: 2% 0 3.5% 0;
+    padding-bottom: 1.5%;
+    position: relative;
+    overflow: hidden;
+
+    .overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: $main;
+      height: 1px;
+      transform: translateX(-100%);
+      transition: $fast transform $transition;
+      will-change: transform;
+    }
+
+    .icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+    }
+
+    input {
+      width: 100%;
+      font-size: 0.9rem;
+      height: 30px;
+      padding: 0 5% 0 1%;
+      border: none;
+      font-family: inherit;
+
+      &:focus + .overlay {
+        transform: translateX(0);
+      }
+
+      &::placeholder {
+        font-size: $f-light;
+      }
+    }
+  }
+}

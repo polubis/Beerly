@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Observable } from 'rxjs';
 
 export class FacadeState<T = unknown> {

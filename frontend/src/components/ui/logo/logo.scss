@@ -15,19 +15,27 @@
     rect {
       fill: $app-background;
     }
-    path,
-    .name {
+
+    path {
       fill: $main;
+    }
+
+    .name {
+      color: $main;
     }
   }
 
   &--light {
     rect {
-      fill: $black;
+      fill: $main;
     }
-    path,
-    .name {
+
+    path {
       fill: $white;
+    }
+
+    .name {
+      color: $white;
     }
   }
 }
