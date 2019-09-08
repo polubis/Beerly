@@ -1,8 +1,33 @@
+@import '../../../styles/variables.scss';
+@import '../../../styles/colors.scss';
+
 .logo {
   display: flex;
   align-items: center;
 
-  &_name {
+  .name {
     margin-left: 20px;
+    font-weight: $f-semi-bold;
+    font-size: 16px;
+  }
+
+  &--default {
+    rect {
+      fill: $app-background;
+    }
+    path,
+    .name {
+      fill: $main;
+    }
+  }
+
+  &--light {
+    rect {
+      fill: $black;
+    }
+    path,
+    .name {
+      fill: $white;
+    }
   }
 }

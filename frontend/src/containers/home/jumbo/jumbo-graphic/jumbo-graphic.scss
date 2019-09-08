@@ -1,0 +1,9 @@
+@import '../../../../styles/media.scss';
+
+.jumbo-graphic {
+  width: 643px;
+
+  @media #{$tablet-and-mobile} {
+    width: 100%;
+  }
+}

@@ -1,0 +1,32 @@
+@import '../../../../styles/colors.scss';
+@import '../../../../styles/variables.scss';
+
+$fs-section-big: 42px;
+$fs-section-medium: 24px;
+
+.section-name {
+  display: flex;
+  flex-flow: column;
+  margin-bottom: 50px;
+
+  &__title {
+    display: flex;
+    align-items: center;
+    font-size: $fs-section-medium;
+    font-weight: $f-medium;
+    
+    .marker {
+      content: '';
+      display: block;
+      width: 30px;
+      margin-right: 22px;
+      height: 1px;
+    }
+  }
+
+  h5 {
+    margin-top: 20px;
+    font-size: $fs-section-big;
+    font-weight: $f-bold;
+  }
+}
