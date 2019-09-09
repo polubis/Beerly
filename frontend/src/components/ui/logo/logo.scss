@@ -4,6 +4,7 @@
 .logo {
   display: flex;
   align-items: center;
+  grid-area: logo;
 
   .name {
     margin-left: 20px;
@@ -15,19 +16,27 @@
     rect {
       fill: $app-background;
     }
-    path,
-    .name {
+
+    path {
       fill: $main;
+    }
+
+    .name {
+      color: $main;
     }
   }
 
   &--light {
     rect {
-      fill: $black;
+      fill: $main;
     }
-    path,
-    .name {
+
+    path {
       fill: $white;
+    }
+
+    .name {
+      color: $white;
     }
   }
 }

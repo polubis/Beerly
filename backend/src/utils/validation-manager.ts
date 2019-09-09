@@ -1,5 +1,3 @@
-import { isEmail } from 'validator';
-
 import { constraints } from './constraints';
 
 interface IValidationManager {
@@ -8,7 +6,7 @@ interface IValidationManager {
 
 class ValidationManager implements IValidationManager {
   public validateByControllerPath = (controllerPath: string, body: any) => {
-    const validators = pathToValidationMapper[controllerPath];
+    const validators = pathToValidationMap[controllerPath];
 
     if (validators !== undefined) {
       for (let i = 0; i < validators.length; i++) {
@@ -25,7 +23,7 @@ class ValidationManager implements IValidationManager {
 
   private email = (email: string | undefined) => {
     return email !== undefined
-      ? isEmail(email)
+      ? constraints.email.test(email)
         ? ''
         : 'Incorrect email format'
       : 'Email field is required';
@@ -49,12 +47,15 @@ class ValidationManager implements IValidationManager {
     if (!username) {
       return 'Username is required';
     }
+
     if (username.length < 8) {
       return 'Username must have at least 8 characters';
     }
-    if (username.length > 15) {
-      return 'Username must have less than 15 characters';
+
+    if (username.length > 20) {
+      return 'Username must have less than 20 characters';
     }
+
     if (!constraints.username.test(username)) {
       return 'Invalid username format';
     }
@@ -73,8 +74,8 @@ class ValidationManager implements IValidationManager {
 
 type Validator = 'email' | 'password' | 'username' | 'dateOfBirth';
 
-const pathToValidationMapper: { [key: string]: Validator[] } = {
-  'accounts': ['username', 'password', 'email', 'dateOfBirth'],
+const pathToValidationMap: { [key: string]: Validator[] } = {
+  accounts: ['username', 'password', 'email', 'dateOfBirth'],
   'auth/login': ['email', 'password']
 };
 

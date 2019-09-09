@@ -1,0 +1,17 @@
+@import '../../../../styles/variables.scss';
+
+.scroller {
+  position: fixed;
+  bottom: 15px;
+  width: 50px;
+  right: calc(40vw + 25px);
+
+  svg {
+    transition: $fast transform $transition;
+    transform: rotate(0);
+  }
+
+  &.rotated svg {
+    transform: rotate(180deg);
+  }
+}

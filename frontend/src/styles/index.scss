@@ -2,6 +2,10 @@
 @import './resets.scss';
 @import './variables.scss';
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   background: $app-background;
   font-family: $f-montserrat, 'sans-serif';
