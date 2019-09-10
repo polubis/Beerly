@@ -30,12 +30,12 @@ export default ({
           )}
 
           <input
-            {...inputConfig}
             id={title}
             data-key={fieldkey}
             name={title}
             autoComplete="off"
             placeholder={placeholder}
+            {...inputConfig}
           />
 
           <label className={classes.overlay}></label>
