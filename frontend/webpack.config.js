@@ -12,6 +12,9 @@ module.exports = (env, { mode }) => {
     entry: './src/index.tsx',
     resolve: {
       extensions: ['.ts', '.tsx', '.js', 'json'],
+      alias: {
+        styles: path.resolve(__dirname, 'src/styles')
+      },
       plugins: [new TsConfigPathsPlugin()]
     },
     output: {
