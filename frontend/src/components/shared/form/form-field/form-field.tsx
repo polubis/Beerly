@@ -3,18 +3,16 @@ import React, { useMemo, InputHTMLAttributes } from 'react';
 import classes from './form-field.scss';
 
 export type FormFieldProps = {
-  title: string;
+  title?: string;
   icon?: JSX.Element;
 } & InputHTMLAttributes<HTMLInputElement>;
 
 export default ({
   title,
-  fieldkey,
   error,
   icon,
-  placeholder = `Type ${title.toLowerCase()}...`,
   ...inputConfig
-}: FormFieldProps & { fieldkey: string; error?: string }) =>
+}: FormFieldProps & { error?: string }) =>
   useMemo(
     () => (
       <section className={classes['form-field']}>
@@ -31,10 +29,8 @@ export default ({
 
           <input
             id={title}
-            data-key={fieldkey}
             name={title}
             autoComplete="off"
-            placeholder={placeholder}
             {...inputConfig}
           />
 
