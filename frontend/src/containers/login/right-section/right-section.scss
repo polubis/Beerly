@@ -1,0 +1,17 @@
+.right {
+    width: 60%;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    position: relative;
+  
+    .banner {
+      background: url('../../../../public/images/beer-2.png');
+      position: absolute;
+      background-attachment: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+    }
+  }
+  

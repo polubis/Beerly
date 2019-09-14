@@ -1,0 +1,39 @@
+@import '../../../../styles/colors.scss';
+
+.container {
+
+  .forgot-password {
+    position: relative;
+    top: -45px;
+    display: flex;
+    justify-content: flex-end;
+
+    a {
+      font-size: 12px;
+      opacity: 0.5;
+    }
+  }
+
+  .buttons-container {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+
+    div {
+      margin: 10px 0;
+
+      button {
+        width: 80%;
+        margin: auto;
+      }
+      span {
+          font-size: 14px;
+      }
+      a {
+          color: #3B5999;
+          font-size: 18px;
+      }
+    }
+  }
+}

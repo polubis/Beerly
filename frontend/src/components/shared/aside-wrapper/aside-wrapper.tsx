@@ -5,11 +5,14 @@ import Logo from 'ui/logo/logo';
 
 import classes from './aside-wrapper.scss';
 
+type AsideWrapperLocalization = 'loginPage' | 'registerPage';
+
 type AsideWrapperProps = {
   children: any;
+  localization: AsideWrapperLocalization;
 };
 
-export default ({ children }: AsideWrapperProps) => (
+export default ({ children, localization }: AsideWrapperProps) => (
   <section className={classes['aside-wrapper']}>
     <div className={classes.logo}>
       <Logo theme="light" />
@@ -18,7 +21,10 @@ export default ({ children }: AsideWrapperProps) => (
     <div className={classes.content}>{children}</div>
 
     <div className={classes.links}>
-      <Link to="/login">Sign In</Link>
+      {localization === 'loginPage'
+        ? <Link to="/register">Sign Up</Link>
+        : <Link to="/login">Sign In</Link>
+      }
       <span className={classes.divider}></span>
       <Link to="/policy">Policy</Link>
       <span className={classes.divider}></span>

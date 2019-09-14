@@ -6,7 +6,7 @@ import RegisterForm from './register-form/register-form';
 const RightSection = () =>
   useMemo(() => {
     return (
-      <AsideWrapper>
+      <AsideWrapper localization='registerPage'>
         <h3>Sign up</h3>
         <RegisterForm />
       </AsideWrapper>
