@@ -15,12 +15,12 @@ const RegisterForm = () => {
       { validate: val => V.one(new V(val).username()) },
       { validate: val => V.one(new V(val).email()) },
       {
-        validate: (val, { fields }) =>
-          V.one(new V(val).password().comparePasswords(fields[0].value))
+        validate: (val, fields) => V.one(new V(val).password().comparePasswords(fields[3].value)),
+        connectedWithIdx: 3
       },
       {
-        validate: (val, { fields }) =>
-          V.one(new V(val).password().comparePasswords(fields[0].value))
+        validate: (val, fields) => V.one(new V(val).password().comparePasswords(fields[2].value)),
+        connectedWithIdx: 2
       }
     ] as FieldConfig[];
   }, []);
@@ -30,12 +30,7 @@ const RegisterForm = () => {
   const redirectToMainPage = (backendResponse: any) => {};
 
   return (
-    <CompoundForm
-      fieldsConfig={fieldsConfig}
-      apiCall={apiCall}
-      numberOfFields={4}
-      onSuccess={redirectToMainPage}
-    >
+    <CompoundForm fieldsConfig={fieldsConfig} apiCall={apiCall} onSuccess={redirectToMainPage}>
       <FormField title="Username" icon={<UsernameIcon />} />
       <FormField title="Email" icon={<EmailIcon />} />
       <FormField title="Password" icon={<PasswordIcon />} />

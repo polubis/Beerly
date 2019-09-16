@@ -9,8 +9,8 @@ export type FieldState = {
 
 export type FieldConfig = {
   initValue?: any;
-  connectedWith?: number;
-  validate?: (value: any, formState: CompoundFormState) => string;
+  connectedWithIdx?: number;
+  validate?: (value: any, fields: FieldState[]) => string;
 };
 
 export type CompoundFormState = {
@@ -21,7 +21,6 @@ export type CompoundFormState = {
 };
 
 export type CompoundFormProps = {
-  numberOfFields: number;
   children: JSX.Element | JSX.Element[];
   fieldsConfig: FieldConfig[];
   apiCall(state: CompoundFormState): Promise<any>;
@@ -30,7 +29,7 @@ export type CompoundFormProps = {
 
 class CompoundForm extends Component<CompoundFormProps, CompoundFormState> {
   private _getInitialState = (
-    length: number = this.props.numberOfFields,
+    length: number = Array.isArray(this.props.children) ? this.props.children.length : 0,
     callback = (v: any, idx: number) => ({ value: '', error: '' })
   ): FieldState[] => Array.from({ length }, (v, k) => callback(v, k));
 
@@ -59,41 +58,38 @@ class CompoundForm extends Component<CompoundFormProps, CompoundFormState> {
     });
   };
 
-  public handleTyping = <T extends ChangeEvent<HTMLInputElement | HTMLTextAreaElement>>(
-    { target: { value } }: T,
+  public handleTyping = (
+    { target: { value } }: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     idx: number
-  ) => {
+  ): void => {
     const { fieldsConfig } = this.props;
-    const { validate, connectedWith } = fieldsConfig[idx];
+    const { validate, connectedWithIdx } = fieldsConfig[idx];
 
-    const fields: FieldState[] = this.state.fields.map((field, fIdx) =>
-      fIdx === idx
-        ? {
-            value,
-            error: this.state.dirty && validate ? validate(value, this.state) : ''
-          }
-        : field
-    );
+    const fields: FieldState[] = [...this.state.fields];
+    fields[idx] = { value, error: this.state.dirty && validate ? validate(value, fields) : '' };
 
-    if (connectedWith) {
-      const { validate } = fieldsConfig[connectedWith];
-      fields[connectedWith].error =
-        this.state.dirty && validate ? validate(fields[connectedWith].value, this.state) : '';
+    if (connectedWithIdx) {
+      const { validate } = fieldsConfig[connectedWithIdx];
+      fields[connectedWithIdx] = {
+        ...fields[connectedWithIdx],
+        error:
+          this.state.dirty && validate ? validate(fields[connectedWithIdx].value, fields) : ''
+      };
     }
 
     const checkErrorsOccured = (): boolean =>
-      this.state.dirty && this.state.fields.some(field => field.error !== '');
+      this.state.dirty && fields.some(field => field.error !== '');
 
     this.setState({ fields, errorsOccured: checkErrorsOccured() });
   };
 
-  public handleSubmit = async (e: ChangeEvent<HTMLFormElement>) => {
+  public handleSubmit = (e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
     let errorsOccured = false;
 
     const fields: FieldState[] = this.state.fields.map((field, idx) => {
       const { validate } = this.props.fieldsConfig[idx];
-      const error: string = validate ? validate(field.value, this.state) : '';
+      const error: string = validate ? validate(field.value, this.state.fields) : '';
       errorsOccured = errorsOccured || error !== '';
 
       return { value: field.value, error };
@@ -101,22 +97,23 @@ class CompoundForm extends Component<CompoundFormProps, CompoundFormState> {
 
     this.setState({ fields, errorsOccured, dirty: true });
 
-    if (!errorsOccured) {
-      this.setState({ saving: true });
+    errorsOccured || this.handleApiCall();
+  };
 
-      try {
-        const res = await this.props.apiCall(this.state);
-        this.setState({ saving: false });
-        this.props.onSuccess(res);
-      } catch (err) {
-        this.setState({ saving: false });
-      }
+  public handleApiCall = async () => {
+    this.setState({ saving: true });
+    try {
+      const res = await this.props.apiCall(this.state);
+      this.setState({ saving: false });
+      this.props.onSuccess(res);
+      console.log(res);
+    } catch (err) {
+      this.setState({ saving: false });
     }
   };
 
   render() {
     const { errorsOccured } = this.state;
-
     return (
       <form onSubmit={this.handleSubmit}>
         {this.renderFormItems()}

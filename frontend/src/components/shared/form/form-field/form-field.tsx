@@ -5,14 +5,16 @@ import classes from './form-field.scss';
 export type FormFieldProps = {
   title?: string;
   icon?: JSX.Element;
+  error?: string;
 } & InputHTMLAttributes<HTMLInputElement>;
 
 export default ({
   title,
   error,
   icon,
+  placeholder = `Type your ${title}...`,
   ...inputConfig
-}: FormFieldProps & { error?: string }) =>
+}: FormFieldProps) =>
   useMemo(
     () => (
       <section className={classes['form-field']}>
@@ -31,6 +33,7 @@ export default ({
             id={title}
             name={title}
             autoComplete="off"
+            placeholder={placeholder}
             {...inputConfig}
           />
 
