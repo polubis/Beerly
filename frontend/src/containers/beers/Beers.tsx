@@ -1,21 +1,21 @@
-import React, { useContext } from 'react';
-import BeersProvider, { BeersContext, BeersProviderState } from 'src/providers/BeersProvider';
+import React, { useContext, useEffect } from 'react';
+import makeBeersProvider, { BeersContext } from 'src/providers/BeersProvider';
 
 const HookedBeers = () => {
-  const context = useContext<BeersProviderState>(BeersContext);
+  const context = useContext(BeersContext);
   console.log(context.beers);
+
+  useEffect(() => {
+    context.swap([], 'beers');
+  }, []);
 
   return null;
 };
 
 class Beers extends React.Component {
   render() {
-    return (
-      <BeersProvider>
-        <HookedBeers />
-      </BeersProvider>
-    );
+    return <HookedBeers />;
   }
 }
 
-export default Beers;
+export default makeBeersProvider(Beers);
