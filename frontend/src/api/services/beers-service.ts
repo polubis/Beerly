@@ -5,6 +5,8 @@ import { Service } from '.';
 class BeersService extends Service {
   getRecommended = () =>
     this.simulate<Beer[]>(beers.map(beer => ({ ...beer, header: 'Beers of the year' })));
+
+  getBeers = () => this.simulate<Beer[]>(beers);
 }
 
 export default new BeersService();

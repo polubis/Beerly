@@ -37,7 +37,7 @@ export default ({ beer }: BeerProps) =>
               <span>{beer.brewery}</span>
             </div>
             <div>
-              <span>Average cost</span>
+              <span>Avg. cost</span>
               <span>
                 {beer.averageCost.value} {beer.averageCost.currency}
               </span>
@@ -55,5 +55,5 @@ export default ({ beer }: BeerProps) =>
         </div>
       </div>
     ),
-    [beer]
+    [beer.rate]
   );

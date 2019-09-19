@@ -6,10 +6,7 @@
   padding: 28px 28px 0 0;
   background: $white;
   box-shadow: $bold-shadow;
-  width: 450px;
-  height: 450px;
   flex-shrink: 0;
-  margin-right: 30px;
   border-radius: 6px;
   display: grid;
   position: relative;
@@ -115,9 +112,9 @@
     .operations {
       display: flex;
       align-items: center;
-      margin: auto 0 28px 0;
+      margin: 25px 0 28px 0;
       justify-content: flex-end;
-      
+
       svg {
         &:first-of-type {
           margin-right: 25px;

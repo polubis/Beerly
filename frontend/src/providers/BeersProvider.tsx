@@ -1,17 +1,17 @@
 import { Beer } from 'models/beer';
 import { createProviderSnapshot, makeProvider } from './Provider';
-import { beers } from 'src/__mocks__/beers';
 
-export type BeersProviderState = {
-  beers: Beer[];
-  beer: Beer | null;
-};
+export class BeersProviderState {
+  beers: Beer[] = [];
+  beersLoading = true;
+  beersError = '';
+  beer: Beer | null = null;
+  beerLoading = false;
+  beerError = '';
+}
 
-const { initState, Context } = createProviderSnapshot<BeersProviderState>({
-  beer: beers[0],
-  beers: beers
-});
+const snapshot = createProviderSnapshot<BeersProviderState>(new BeersProviderState());
 
-export const BeersContext = Context;
+export const BeersContext = snapshot.Context;
 
-export default makeProvider<BeersProviderState>(initState, BeersContext.Provider);
+export default makeProvider<BeersProviderState>(snapshot);

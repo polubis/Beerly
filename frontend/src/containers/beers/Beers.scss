@@ -1,0 +1,16 @@
+.beers {
+  padding: 50px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  grid-auto-rows: 385px;
+  grid-gap: 30px;
+
+  .beer__placeholder {
+    background: #efefef;
+  }
+}
+
+.loadMoreButton {
+  margin: 25px auto !important;
+  display: block !important;
+}
