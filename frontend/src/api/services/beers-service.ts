@@ -6,7 +6,15 @@ class BeersService extends Service {
   getRecommended = () =>
     this.simulate<Beer[]>(beers.map(beer => ({ ...beer, header: 'Beers of the year' })));
 
-  getBeers = () => this.simulate<Beer[]>(beers);
+  get = () => this.simulate<Beer[]>(beers);
+
+  add = (beer: Partial<Beer>) =>
+    this.simulate<Beer>({ ...beer, id: 1001, picture: beers[0].picture });
+
+  edit = (beer: Partial<Beer>) =>
+    this.simulate<Beer>({ ...beer, id: 1001, picture: beers[0].picture });
+
+  delete = (beerId: number) => this.simulate<Beer>({ status: 200, data: null });
 }
 
 export default new BeersService();

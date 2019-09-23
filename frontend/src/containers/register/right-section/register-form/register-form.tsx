@@ -48,7 +48,7 @@ const RegisterForm = () => {
     state: { keys, fields, errorsOccured },
     handleTyping,
     handleSubmit
-  } = useForm<RegisterFormFields>(config);
+  } = useForm<RegisterFormFields>(config, () => {});
 
   return (
     <form className={classes['register-form']} onSubmit={handleSubmit}>
