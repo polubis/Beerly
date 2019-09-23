@@ -14,6 +14,10 @@ export type Fields<T extends string> = {
   [S in T]: Field;
 };
 
+export type PureFields<T extends string> = {
+  [S in T]: any;
+};
+
 export type Field = {
   value: any;
   error: string;
@@ -27,7 +31,8 @@ export type FormState<T extends string> = {
 };
 
 export const useForm = <T extends string>(
-  fieldsConfig: FieldsConfig<T>
+  fieldsConfig: FieldsConfig<T>,
+  onSuccessSubmit: (fields: PureFields<T>) => void
 ): {
   state: FormState<T>;
   setState: (state: FormState<T>) => void;
@@ -86,33 +91,41 @@ export const useForm = <T extends string>(
   const handleSubmit = (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    setState(prevState => {
-      let errorsOccured = false;
+    let errorsOccured = false;
 
-      const fields = prevState.keys.reduce(
-        (currentFields, key) => {
-          const { validate } = fieldsConfig[key];
-          const error: string = validate ? validate(currentFields[key].value, currentFields) : '';
-          errorsOccured = errorsOccured || error !== '';
+    const fields = state.keys.reduce(
+      (currentFields, key) => {
+        const { validate } = fieldsConfig[key];
+        const error: string = validate ? validate(currentFields[key].value, currentFields) : '';
+        errorsOccured = errorsOccured || error !== '';
 
-          return {
-            ...currentFields,
-            [key]: {
-              ...currentFields[key],
-              error
-            }
-          };
-        },
-        prevState.fields as Fields<T>
-      );
+        return {
+          ...currentFields,
+          [key]: {
+            ...currentFields[key],
+            error
+          }
+        };
+      },
+      state.fields as Fields<T>
+    );
 
-      return {
-        ...prevState,
-        dirty: true,
-        errorsOccured,
-        fields
-      };
-    });
+    const newState = {
+      ...state,
+      dirty: true,
+      errorsOccured,
+      fields
+    };
+
+    setState(newState);
+
+    if (!errorsOccured) {
+      const pureFields = newState.keys.reduce((prev, key) => {
+        return { ...prev, [key]: newState.fields[key].value };
+      }, {});
+
+      onSuccessSubmit(pureFields as PureFields<T>);
+    }
   };
 
   return {

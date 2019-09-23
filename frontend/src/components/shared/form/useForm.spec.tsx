@@ -26,7 +26,7 @@ describe('useForm(config)', () => {
   });
 
   it('should create initial state correctly', () => {
-    const { result } = renderHook(() => useForm<MockFormFields>(config));
+    const { result } = renderHook(() => useForm<MockFormFields>(config, () => {}));
 
     const { keys, dirty, errorsOccured, fields } = result.current.state;
 
@@ -51,10 +51,13 @@ describe('useForm(config)', () => {
 
   it('should create initial state based on initValue attributes', () => {
     const { result } = renderHook(() =>
-      useForm<MockFormFields>({
-        ...config,
-        username: { ...config.username, initValue: 'piotr1994' }
-      })
+      useForm<MockFormFields>(
+        {
+          ...config,
+          username: { ...config.username, initValue: 'piotr1994' }
+        },
+        () => {}
+      )
     );
 
     expect(result.current.state.fields.username.value).toEqual('piotr1994');
@@ -75,7 +78,9 @@ describe('useForm(config)', () => {
     });
 
     it('should set field state based on data-key attribute and passed target value', () => {
-      const { result } = renderHook(() => useForm<MockFormFields>(handleTypingMockConfig));
+      const { result } = renderHook(() =>
+        useForm<MockFormFields>(handleTypingMockConfig, () => {})
+      );
 
       act(() => {
         result.current.handleTyping(eventMock);
@@ -86,7 +91,9 @@ describe('useForm(config)', () => {
     });
 
     it('should call validate() method from field config if form was submitted', () => {
-      const { result } = renderHook(() => useForm<MockFormFields>(handleTypingMockConfig));
+      const { result } = renderHook(() =>
+        useForm<MockFormFields>(handleTypingMockConfig, () => {})
+      );
 
       result.current.setState({
         dirty: true,
@@ -107,7 +114,9 @@ describe('useForm(config)', () => {
     });
 
     it('should checkErrorsOccured() method and set errorsOccured as true if dirty attribute is set to true', () => {
-      const { result } = renderHook(() => useForm<MockFormFields>(handleTypingMockConfig));
+      const { result } = renderHook(() =>
+        useForm<MockFormFields>(handleTypingMockConfig, () => {})
+      );
 
       act(() => {
         result.current.handleSubmit({ preventDefault: () => {} } as any);
@@ -122,7 +131,9 @@ describe('useForm(config)', () => {
       handleTypingMockConfig.username.connectedWith = 'password';
       handleTypingMockConfig.password.value = 'pass19';
       handleTypingMockConfig.password.validate = (v, state) => V.one(new V(v).password());
-      const { result } = renderHook(() => useForm<MockFormFields>(handleTypingMockConfig));
+      const { result } = renderHook(() =>
+        useForm<MockFormFields>(handleTypingMockConfig, () => {})
+      );
 
       act(() => {
         result.current.handleSubmit({ preventDefault: () => {} } as any);
@@ -143,14 +154,14 @@ describe('useForm(config)', () => {
           ...config.username,
           initValue: 'piotr1994',
           validate: (v, state) => V.one(new V(v).username())
-        },
+        }
       };
       handleSubmitConfig.email.validate = (v, state) => V.one(new V(v).email());
       handleSubmitConfig.password.validate = (v, state) => V.one(new V(v).password());
     });
 
     it('should set dirty attribute to true after call', () => {
-      const { result } = renderHook(() => useForm<MockFormFields>(handleSubmitConfig));
+      const { result } = renderHook(() => useForm<MockFormFields>(handleSubmitConfig, () => {}));
 
       act(() => {
         result.current.handleSubmit({ preventDefault: () => {} } as any);
@@ -160,7 +171,7 @@ describe('useForm(config)', () => {
     });
 
     it('should set errorsOccured attribute if errors has been detected', () => {
-      const { result } = renderHook(() => useForm<MockFormFields>(handleSubmitConfig));
+      const { result } = renderHook(() => useForm<MockFormFields>(handleSubmitConfig, () => {}));
 
       result.current.setState({
         dirty: true,
@@ -181,7 +192,7 @@ describe('useForm(config)', () => {
     });
 
     it('should call validate method if exists for every field ', () => {
-      const { result } = renderHook(() => useForm<MockFormFields>(handleSubmitConfig));
+      const { result } = renderHook(() => useForm<MockFormFields>(handleSubmitConfig, () => {}));
       result.current.setState({
         dirty: true,
         errorsOccured: true,

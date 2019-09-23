@@ -83,6 +83,7 @@
       display: -webkit-box;
       -webkit-line-clamp: 3;
       -webkit-box-orient: vertical;
+      word-break: break-all;
     }
 
     .details {
@@ -112,12 +113,14 @@
     .operations {
       display: flex;
       align-items: center;
-      margin: 25px 0 28px 0;
+      margin: auto 0 28px 0;
       justify-content: flex-end;
 
       svg {
-        &:first-of-type {
-          margin-right: 25px;
+        cursor: pointer;
+
+        &:not(:last-of-type) {
+          margin-right: 20px;
         }
       }
     }

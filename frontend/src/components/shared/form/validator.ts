@@ -41,4 +41,33 @@ export class Validator {
         ? 'Fields "Password" and "Repeated password" must be the same'
         : ''
     );
+
+  required = () => this.setErrors(this._value === '' ? `Field is required` : '');
+
+  min = (limit: number) =>
+    this.setErrors(
+      this._value.length < limit && this._value.length !== 0
+        ? `Field must have more than ${limit} characters`
+        : ''
+    );
+
+  max = (limit: number) =>
+    this.setErrors(
+      this._value.length > limit ? `Field must have less than ${limit} characters` : ''
+    );
+
+  oneOf = (...args: string[]) =>
+    this.setErrors(
+      args.map(arg => arg.trim().toLowerCase()).includes(this._value.trim().toLowerCase())
+        ? ''
+        : `Field must have value from (${args.join(',  ')}) collection`
+    );
+
+  price = () =>
+    this.setErrors(!constraints.twoDigitNumber.test(this._value) ? 'Invalid price format' : '');
+
+  percentage = () =>
+    this.setErrors(
+      !constraints.twoDigitNumber.test(this._value) ? 'Invalid percentage format' : ''
+    );
 }

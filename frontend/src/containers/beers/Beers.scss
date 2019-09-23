@@ -1,3 +1,17 @@
+@import '../../styles/colors.scss';
+
+.beersHeader {
+  display: flex;
+  align-items: center;
+  margin: 25px 0 0 50px;
+
+  button {
+    &:not(:last-of-type) {
+      margin-right: 25px;
+    }
+  }
+}
+
 .beers {
   padding: 50px;
   display: grid;
@@ -13,4 +27,32 @@
 .loadMoreButton {
   margin: 25px auto !important;
   display: block !important;
+}
+
+.confirmation {
+  display: flex;
+  flex-flow: column;
+  width: 450px;
+
+  & > h3 {
+    font-size: 20px;
+    color: $white;
+    text-shadow: 0 3px 6px rgb(0,0,0);
+    margin-bottom: 25px;
+  }
+
+  .confirmation__operations {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    margin-top: 30px;
+    background: $white;
+    padding: 10px;
+    box-shadow: $thin-shadow;
+    border-radius: 4px;
+
+    button:first-of-type {
+      color: #bebdbd;
+    }
+  }
 }

@@ -3,6 +3,9 @@
 interface CssExports {
   'beer__placeholder': string;
   'beers': string;
+  'beersHeader': string;
+  'confirmation': string;
+  'confirmation__operations': string;
   'loadMoreButton': string;
 }
 declare var cssExports: CssExports;
