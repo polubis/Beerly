@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Button } from '@material-ui/core';
 import Beer from '../home/beers-slider/beer';
+import { connect } from 'react-redux';
 import classes from './Beers.scss';
 import { Beer as BeerEntity } from 'models/beer';
-import BeersDataService from 'src/data-services/BeersDataService';
-import { EnhancedData } from 'src/data-services';
+import beersActions from '../../store/actions/beersActions';
+import beersService from 'services/beers-service';
 
 type BeersListProps = {
   beers: BeerEntity[];
@@ -23,24 +24,31 @@ const BeersList = ({ beers, beersLoading }: BeersListProps): JSX.Element => (
   </div>
 );
 
-const BeersPage = () => {
-  const [{ data: beers, isLoading: beersLoading }, setBeers] = useState(
-    new EnhancedData<BeerEntity[]>([])
-  );
+const BeersPage = ({
+  beers,
+  beersLoading,
+  beersError,
+  beersLoad,
+  beersLoadSuccess,
+  beersLoadFailure
+}) => {
   const [page, setPage] = useState(1);
 
-  useEffect(() => {
-    const sub = BeersDataService.beers.subscribe(value => {
-      setBeers(value);
-    });
+  const handleLoadBeers = () => {
+    beersLoad();
+    beersService
+      .get()
+      .toPromise()
+      .then(beers => {
+        beersLoadSuccess(beers);
+      })
+      .catch(err => {
+        beersLoadFailure(beers);
+      });
+  };
 
-    return () => {
-      sub.unsubscribe();
-    };
-  }, []);
-
   useEffect(() => {
-    BeersDataService.loadAllBeers(page);
+    handleLoadBeers();
   }, [page]);
 
   return (
@@ -57,4 +65,23 @@ const BeersPage = () => {
   );
 };
 
-export default BeersPage;
+const mapStateToProps = state => {
+  return {
+    beers: state.beersReducer.beers,
+    beersLoading: state.beersReducer.beersLoading,
+    beersError: state.beersReducer.beersError
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    beersLoad: () => dispatch(beersActions.BEERS_LOAD()),
+    beersLoadSuccess: beers => dispatch(beersActions.BEERS_LOAD_SUCCESS(beers)),
+    beersLoadFailure: () => dispatch(beersActions.BEERS_LOAD_FAILURE())
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(BeersPage);

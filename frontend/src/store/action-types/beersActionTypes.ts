@@ -1,0 +1,7 @@
+const BEERS_LOAD = 'BEERS_LOAD';
+
+export default Object.freeze({
+  BEERS_LOAD,
+  BEERS_LOAD_SUCCESS: `${BEERS_LOAD}_SUCCESS`,
+  BEERS_LOAD_FAILURE: `${BEERS_LOAD}_FAILURE`
+});
