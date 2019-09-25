@@ -4,7 +4,8 @@ export const beersReducer = makeReducer([
   {
     key: 'beers',
     value: [],
-    updateCallback: (state, action) => [...state.beers, ...action.beers]
+    updateCallback: (state, action) =>
+      [...state.beers, ...action.beers].map((b, idx) => ({ ...b, id: idx }))
   },
   {
     key: 'beer',

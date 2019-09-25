@@ -17,7 +17,7 @@ const _beer = {
   // Dodaj sobie akcje do zmiany pojedynczego piwa
 };
 
-export default {
+export default Object.freeze({
   ..._beers,
   ..._beer
-} as any;
+}) as any;
