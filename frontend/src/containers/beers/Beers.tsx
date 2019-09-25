@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import classes from './Beers.scss';
 import { Beer as BeerEntity } from 'models/beer';
 import beersActions from '../../store/actions/beersActions';
+import { beersSelector } from 'src/store/selectors/beersSelectors';
 
 type BeersListProps = {
   beers: BeerEntity[];
@@ -45,10 +46,6 @@ const BeersPage = ({ beers, beersLoading, beersError, loadBeers }) => {
 };
 
 export default connect(
-  ({ beersReducer: { beers, beersLoading, beersError } }: any) => ({
-    beers,
-    beersLoading,
-    beersError
-  }),
+  beersSelector,
   { loadBeers: beersActions.BEERS_LOAD }
 )(BeersPage);
