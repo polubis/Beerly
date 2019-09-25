@@ -8,8 +8,9 @@ const _beers = {
     type: beersActionsTypes.BEERS_LOAD_SUCCESS,
     beers
   }),
-  [beersActionsTypes.BEERS_LOAD_FAILURE]: () => ({
-    type: beersActionsTypes.BEERS_LOAD_FAILURE
+  [beersActionsTypes.BEERS_LOAD_FAILURE]: error => ({
+    type: beersActionsTypes.BEERS_LOAD_FAILURE,
+    error
   })
 };
 

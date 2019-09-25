@@ -4,7 +4,7 @@ import Beer from '../home/beers-slider/beer';
 import { connect } from 'react-redux';
 import classes from './Beers.scss';
 import { Beer as BeerEntity } from 'models/beer';
-import { loadBeers } from '../../store/async-actions/beersAsyncActions';
+import beersActions from '../../store/actions/beersActions';
 
 type BeersListProps = {
   beers: BeerEntity[];
@@ -50,5 +50,5 @@ export default connect(
     beersLoading,
     beersError
   }),
-  { loadBeers }
+  { loadBeers: beersActions.BEERS_LOAD }
 )(BeersPage);
