@@ -15,6 +15,8 @@ const configureStore = (initialState?: any) => {
   const middlewares = [];
   // compose enhancers
   const enhancers = composeEnhancers(applyMiddleware(...middlewares));
+
+  console.log(reducers);
   // create store
   return createStore(combineReducers(reducers as any), initialState, enhancers);
 };
