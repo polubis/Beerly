@@ -1,5 +1,20 @@
-import beersActionTypes from '../action-types/beersActionTypes';
+import { makeReducer } from '../utils/makeReducer';
 
+export const beersReducer = makeReducer([
+  {
+    key: 'beers',
+    value: [],
+    updateCallback: (state, action) => [...state.beers, ...action.beers]
+  },
+  {
+    key: 'beer',
+    value: null
+  }
+]);
+
+// *** OLD REDUCER SYNTAX
+
+/* 
 const initialState: any = {
   page: 1,
   beers: [],
@@ -34,6 +49,8 @@ export const beersReducer = (state: any = initialState, action: any) =>
   beersReducerMap.hasOwnProperty(action.type)
     ? { ...state, ...beersReducerMap[action.type](state, action) }
     : state;
+
+*/
 
 // *** OLD REDUCER SYNTAX
 
