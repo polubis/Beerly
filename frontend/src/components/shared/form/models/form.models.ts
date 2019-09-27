@@ -1,3 +1,10 @@
+export type UseFormReturn<T extends string> = {
+  state: FormState<T>;
+  setState: (state: FormState<T>) => void;
+  handleTyping: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+  handleSubmit: (e: React.ChangeEvent<HTMLFormElement>) => void;
+};
+
 export type FieldsConfig<T extends string> = {
   [S in T]: {
     initValue?: any;
@@ -15,8 +22,9 @@ export type FieldsValues<T extends string> = {
 };
 
 export type FormState<T extends string> = {
-  keys: T[];
   fields: FieldsState<T>;
+  keys: T[];
+  keysEnum: { [S in T]: T };
   dirty: boolean;
   errorsOccured: boolean;
 };

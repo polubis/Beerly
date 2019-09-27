@@ -97,6 +97,11 @@ describe('useForm(config)', () => {
       result.current.setState({
         dirty: true,
         errorsOccured: true,
+        keysEnum: {
+          username: 'username',
+          email: 'email',
+          password: 'password'
+        },
         fields: {
           username: { value: '', error: '' },
           email: { value: '', error: '' },
@@ -179,6 +184,11 @@ describe('useForm(config)', () => {
       result.current.setState({
         dirty: true,
         errorsOccured: true,
+        keysEnum: {
+          username: 'username',
+          email: 'email',
+          password: 'password'
+        },
         fields: {
           username: { value: '', error: '' },
           email: { value: '', error: '' },
@@ -201,6 +211,11 @@ describe('useForm(config)', () => {
       result.current.setState({
         dirty: true,
         errorsOccured: true,
+        keysEnum: {
+          username: 'username',
+          email: 'email',
+          password: 'password'
+        },
         fields: {
           username: { value: '', error: '' },
           email: { value: '', error: '' },

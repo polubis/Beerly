@@ -11,7 +11,7 @@ import classes from './register-form.scss';
 
 const RegisterForm = () => {
   const {
-    state: { keys, fields, errorsOccured },
+    state: { keysEnum, fields, errorsOccured },
     handleTyping,
     handleSubmit
   } = useForm<RegisterFormFields>(registerFormConfig, fields => console.log(fields));
@@ -19,10 +19,11 @@ const RegisterForm = () => {
   return (
     <form className={classes['register-form']} onSubmit={handleSubmit}>
       <FormField
+        autoFocus
         title="Username"
         placeholder="Type username..."
         icon={<UsernameIcon />}
-        fieldkey={keys[0]}
+        fieldkey={keysEnum.username}
         onChange={handleTyping}
         {...fields.username}
       />
@@ -30,7 +31,7 @@ const RegisterForm = () => {
         title="Email"
         placeholder="Type email adress..."
         icon={<EmailIcon />}
-        fieldkey={keys[1]}
+        fieldkey={keysEnum.email}
         onChange={handleTyping}
         {...fields.email}
       />
@@ -38,7 +39,7 @@ const RegisterForm = () => {
         title="Password"
         placeholder="Type password..."
         icon={<PasswordIcon />}
-        fieldkey={keys[2]}
+        fieldkey={keysEnum.password}
         onChange={handleTyping}
         {...fields.password}
       />
@@ -46,7 +47,7 @@ const RegisterForm = () => {
         title="Repeated password"
         placeholder="Type repeated password..."
         icon={<PasswordIcon />}
-        fieldkey={keys[3]}
+        fieldkey={keysEnum.repeatedPassword}
         onChange={handleTyping}
         {...fields.repeatedPassword}
       />
