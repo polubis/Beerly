@@ -2,7 +2,7 @@ import React, { useMemo, InputHTMLAttributes } from 'react';
 
 import classes from './form-field.scss';
 
-export type FormFieldProps = {
+type FormFieldProps = {
   title: string;
   fieldkey: string;
   icon?: JSX.Element;

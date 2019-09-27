@@ -4,9 +4,8 @@ import PasswordIcon from '@material-ui/icons/Lock';
 import UsernameIcon from '@material-ui/icons/AccountBox';
 
 import Button from 'ui/button/button';
-import FormField from 'components/shared/form/form-field/form-field';
 import { registerFormConfig, RegisterFormFields } from './register-form.models';
-import { useForm } from 'components/shared/form/useForm';
+import FormField, { useForm } from 'components/shared/form';
 
 import classes from './register-form.scss';
 

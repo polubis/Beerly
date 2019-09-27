@@ -1,5 +1,4 @@
-import { FieldsConfig } from 'components/shared/form/models/form.models';
-import { Validator as V } from 'components/shared/form/utils/validator';
+import { FieldsConfig, Validator as V } from 'components/shared/form';
 
 export type RegisterFormFields = 'username' | 'email' | 'password' | 'repeatedPassword';
 

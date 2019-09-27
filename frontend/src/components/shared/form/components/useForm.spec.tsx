@@ -1,8 +1,7 @@
 import { act } from '@testing-library/react';
 import { renderHook } from '@testing-library/react-hooks';
 
-import { useForm, FieldsConfig, FieldsState } from './useForm';
-import { Validator as V } from './utils/validator';
+import { useForm, FieldsConfig, FieldsState, Validator as V } from '..';
 
 type MockFormFields = 'username' | 'email' | 'password';
 
@@ -12,9 +11,9 @@ describe('useForm(config)', () => {
 
   beforeEach(() => {
     config = {
-      username: { title: 'Username' },
-      email: { title: 'Username' },
-      password: { title: 'Username' }
+      username: {},
+      email: {},
+      password: {}
     };
     eventMock = {
       persist: () => {},
@@ -129,7 +128,7 @@ describe('useForm(config)', () => {
 
     it('should check connectedWith field error property if dirty attribute is set to true', () => {
       handleTypingMockConfig.username.connectedWith = 'password';
-      handleTypingMockConfig.password.value = 'pass19';
+      handleTypingMockConfig.password.initValue = 'pass19';
       handleTypingMockConfig.password.validate = (v, state) => V.one(new V(v).password());
       const { result } = renderHook(() =>
         useForm<MockFormFields>(handleTypingMockConfig, result => result)

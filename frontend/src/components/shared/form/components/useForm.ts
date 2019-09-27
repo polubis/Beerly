@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
 
-import { FieldsConfig, FieldsValues, FormState, FieldsState } from './models/form.models';
+import { FieldsConfig, FieldsValues, FormState, FieldsState } from '..';
 
 export const useForm = <T extends string>(
   fieldsConfig: FieldsConfig<T>,
