@@ -10,6 +10,7 @@ accountsController.post('', async (req: Request, res: Response, next: NextFuncti
   if (req.session.passport && req.session.passport.user !== undefined) {
     return next(new Forbidden('Account creation is not allowed for logged in users'));
   }
+
   try {
     const result = await accountsService.createAccount(req.body);
     parseSuccess(req, res, result);

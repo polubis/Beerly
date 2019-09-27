@@ -14,7 +14,7 @@ export type FieldsConfig<T extends string> = {
 };
 
 export type FieldsState<T extends string> = {
-  [S in T]: { value: any; error: string };
+  [S in T]: { value: any; error: string; fieldkey: T };
 };
 
 export type FieldsValues<T extends string> = {
@@ -24,7 +24,6 @@ export type FieldsValues<T extends string> = {
 export type FormState<T extends string> = {
   fields: FieldsState<T>;
   keys: T[];
-  keysEnum: { [S in T]: T };
   dirty: boolean;
   errorsOccured: boolean;
 };

@@ -9,8 +9,18 @@ type FormFieldProps = {
   error?: string;
 } & InputHTMLAttributes<HTMLInputElement>;
 
-const FormField = ({ title, fieldkey, error, icon, ...inputProps }: FormFieldProps): JSX.Element =>
-  useMemo(() => {
+const FormField = ({
+  title,
+  fieldkey,
+  error,
+  icon,
+  ...inputProps
+}: FormFieldProps): JSX.Element => {
+  const placeholder = useMemo(() => {
+    return inputProps.placeholder || `Type your ${title.toLowerCase()}...`;
+  }, []);
+
+  const content = useMemo(() => {
     return (
       <section className={classes['form-field']}>
         <label htmlFor={title} className={classes.title}>
@@ -24,7 +34,14 @@ const FormField = ({ title, fieldkey, error, icon, ...inputProps }: FormFieldPro
             </label>
           )}
 
-          <input id={title} data-key={fieldkey} name={title} autoComplete="off" {...inputProps} />
+          <input
+            id={title}
+            data-key={fieldkey}
+            name={title}
+            autoComplete="off"
+            {...inputProps}
+            placeholder={placeholder}
+          />
 
           <label className={classes.overlay}></label>
         </div>
@@ -33,5 +50,8 @@ const FormField = ({ title, fieldkey, error, icon, ...inputProps }: FormFieldPro
       </section>
     );
   }, [error, inputProps.value]);
+
+  return content;
+};
 
 export default FormField;

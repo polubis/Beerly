@@ -8,19 +8,18 @@ export const useForm = <T extends string>(
 ): UseFormReturn<T> => {
   const createFormState = useCallback((fieldsConfig: FieldsConfig<T>): FormState<T> => {
     const keys = Object.keys(fieldsConfig);
-    const keysEnum = keys.reduce((prev, key) => ({ ...prev, [key]: key }), {});
 
     return {
       dirty: false,
       errorsOccured: false,
       keys,
-      keysEnum,
       fields: keys.reduce(
         (state, key) => ({
           ...state,
           [key]: {
             value: fieldsConfig[key].initValue || '',
-            error: ''
+            error: '',
+            fieldkey: key
           }
         }),
         {}
@@ -39,6 +38,7 @@ export const useForm = <T extends string>(
       const fields: FieldsState<T> = {
         ...prevState.fields,
         [key]: {
+          ...prevState.fields[key],
           value: e.target.value,
           error: prevState.dirty && validate ? validate(e.target.value, prevState.fields) : ''
         }

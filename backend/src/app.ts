@@ -1,5 +1,6 @@
 import express, { Application, Request, Response, NextFunction } from 'express';
 import bodyParser from 'body-parser';
+import cors from 'cors';
 import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
 
@@ -49,7 +50,7 @@ export default class App {
 
     const app: Application = express();
 
-    app.set('port', process.env.PORT || 3000);
+    app.set('port', process.env.PORT || 8080);
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -58,15 +59,7 @@ export default class App {
     app.use(passport.initialize());
     app.use(passport.session());
 
-    app.use((req: Request, res: Response, next: NextFunction) => {
-      res.setHeader('Access-Control-Allow-Origin', '*');
-      res.setHeader(
-        'Access-Control-Allow-Headers',
-        'Origin, X-Requested-With, Content-Type, Accept, Authorization'
-      );
-      res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, PUT, DELETE, OPTIONS');
-      next();
-    });
+    app.use(cors({ credentials: true, origin: 'http://localhost:3000' }));
 
     app.use(payloadValidation);
 

@@ -35,15 +35,18 @@ describe('useForm(config)', () => {
     expect(fields).toEqual({
       username: {
         value: '',
-        error: ''
+        error: '',
+        fieldkey: 'username'
       },
       email: {
         value: '',
-        error: ''
+        error: '',
+        fieldkey: 'email'
       },
       password: {
         value: '',
-        error: ''
+        error: '',
+        fieldkey: 'password'
       }
     } as FieldsState<MockFormFields>);
   });
@@ -97,15 +100,10 @@ describe('useForm(config)', () => {
       result.current.setState({
         dirty: true,
         errorsOccured: true,
-        keysEnum: {
-          username: 'username',
-          email: 'email',
-          password: 'password'
-        },
         fields: {
-          username: { value: '', error: '' },
-          email: { value: '', error: '' },
-          password: { value: '', error: '' }
+          username: { value: '', error: '', fieldkey: 'username' },
+          email: { value: '', error: '', fieldkey: 'email' },
+          password: { value: '', error: '', fieldkey: 'password' }
         },
         keys: ['username', 'email', 'password']
       });
@@ -184,15 +182,10 @@ describe('useForm(config)', () => {
       result.current.setState({
         dirty: true,
         errorsOccured: true,
-        keysEnum: {
-          username: 'username',
-          email: 'email',
-          password: 'password'
-        },
         fields: {
-          username: { value: '', error: '' },
-          email: { value: '', error: '' },
-          password: { value: '', error: '' }
+          username: { value: '', error: '', fieldkey: 'username' },
+          email: { value: '', error: '', fieldkey: 'email' },
+          password: { value: '', error: '', fieldkey: 'password' }
         },
         keys: ['username', 'email', 'password']
       });
@@ -211,15 +204,10 @@ describe('useForm(config)', () => {
       result.current.setState({
         dirty: true,
         errorsOccured: true,
-        keysEnum: {
-          username: 'username',
-          email: 'email',
-          password: 'password'
-        },
         fields: {
-          username: { value: '', error: '' },
-          email: { value: '', error: '' },
-          password: { value: '', error: '' }
+          username: { value: '', error: '', fieldkey: 'username' },
+          email: { value: '', error: '', fieldkey: 'email' },
+          password: { value: '', error: '', fieldkey: 'password' }
         },
         keys: ['username', 'email', 'password']
       });
