@@ -1,33 +1,10 @@
 import { useState, useCallback } from 'react';
 
-import { FormFieldProps } from './form-field/form-field';
-
-export type FieldsConfig<T extends string> = {
-  [S in T]: {
-    initValue?: any;
-    connectedWith?: T;
-    validate?: (value: string, fields: Fields<T>) => string;
-  } & FormFieldProps;
-};
-
-export type Fields<T extends string> = {
-  [S in T]: Field;
-};
-
-export type Field = {
-  value: any;
-  error: string;
-};
-
-export type FormState<T extends string> = {
-  keys: T[];
-  fields: Fields<T>;
-  dirty: boolean;
-  errorsOccured: boolean;
-};
+import { FieldsConfig, FieldsValues, FormState, FieldsState } from './models/form.models';
 
 export const useForm = <T extends string>(
-  fieldsConfig: FieldsConfig<T>
+  fieldsConfig: FieldsConfig<T>,
+  onSuccessSubmit: (fieldsValues: FieldsValues<T>) => void
 ): {
   state: FormState<T>;
   setState: (state: FormState<T>) => void;
@@ -62,7 +39,7 @@ export const useForm = <T extends string>(
     const { validate, connectedWith } = fieldsConfig[key];
 
     setState(prevState => {
-      const fields: Fields<T> = {
+      const fields: FieldsState<T> = {
         ...prevState.fields,
         [key]: {
           value: e.target.value,
@@ -86,33 +63,41 @@ export const useForm = <T extends string>(
   const handleSubmit = (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    setState(prevState => {
-      let errorsOccured = false;
+    let errorsOccured = false;
 
-      const fields = prevState.keys.reduce(
-        (currentFields, key) => {
-          const { validate } = fieldsConfig[key];
-          const error: string = validate ? validate(currentFields[key].value, currentFields) : '';
-          errorsOccured = errorsOccured || error !== '';
+    const fields = state.keys.reduce(
+      (currentFields, key) => {
+        const { validate } = fieldsConfig[key];
+        const error: string = validate ? validate(currentFields[key].value, currentFields) : '';
+        errorsOccured = errorsOccured || error !== '';
 
-          return {
-            ...currentFields,
-            [key]: {
-              ...currentFields[key],
-              error
-            }
-          };
-        },
-        prevState.fields as Fields<T>
-      );
+        return {
+          ...currentFields,
+          [key]: {
+            ...currentFields[key],
+            error
+          }
+        };
+      },
+      state.fields as FieldsState<T>
+    );
 
-      return {
-        ...prevState,
-        dirty: true,
-        errorsOccured,
-        fields
-      };
-    });
+    const newState = {
+      ...state,
+      dirty: true,
+      errorsOccured,
+      fields
+    };
+
+    setState(newState);
+
+    if (!errorsOccured) {
+      const fieldsValues = newState.keys.reduce((prev, key) => {
+        return { ...prev, [key]: newState.fields[key].value };
+      }, {});
+
+      onSuccessSubmit(fieldsValues as FieldsValues<T>);
+    }
   };
 
   return {

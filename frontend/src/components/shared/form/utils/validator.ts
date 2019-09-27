@@ -12,9 +12,9 @@ export class Validator {
 
   static one = (validator: Validator): string => validator._error;
 
-  email = () => this.setErrors(!constraints.email.test(this._value) ? 'Invalid email format' : '');
+  public email = () => this.setErrors(!constraints.email.test(this._value) ? 'Invalid email format' : '');
 
-  username = () => {
+  public username = () => {
     if (this._value.length < 8) {
       return this.setErrors('Miniumum length is 8');
     }
@@ -26,7 +26,7 @@ export class Validator {
     return this.setErrors(!constraints.username.test(this._value) ? 'Invalid username format' : '');
   };
 
-  password = () =>
+  public password = () =>
     this.setErrors(
       this._value.length < 8
         ? 'Miniumum length is 8'
@@ -35,7 +35,7 @@ export class Validator {
         : ''
     );
 
-  comparePasswords = (repeatedPassword: string) =>
+  public comparePasswords = (repeatedPassword: string) =>
     this.setErrors(
       this._value !== repeatedPassword
         ? 'Fields "Password" and "Repeated password" must be the same'

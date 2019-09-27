@@ -4,19 +4,14 @@ import classes from './form-field.scss';
 
 export type FormFieldProps = {
   title: string;
+  fieldkey: string;
   icon?: JSX.Element;
+  error?: string;
 } & InputHTMLAttributes<HTMLInputElement>;
 
-export default ({
-  title,
-  fieldkey,
-  error,
-  icon,
-  placeholder = `Type ${title.toLowerCase()}...`,
-  ...inputConfig
-}: FormFieldProps & { fieldkey: string; error?: string }) =>
-  useMemo(
-    () => (
+const FormField = ({ title, fieldkey, error, icon, ...inputProps }: FormFieldProps): JSX.Element =>
+  useMemo(() => {
+    return (
       <section className={classes['form-field']}>
         <label htmlFor={title} className={classes.title}>
           {title}
@@ -29,20 +24,14 @@ export default ({
             </label>
           )}
 
-          <input
-            id={title}
-            data-key={fieldkey}
-            name={title}
-            autoComplete="off"
-            placeholder={placeholder}
-            {...inputConfig}
-          />
+          <input id={title} data-key={fieldkey} name={title} autoComplete="off" {...inputProps} />
 
           <label className={classes.overlay}></label>
         </div>
 
         <span className={classes['validation-message']}>{error}</span>
       </section>
-    ),
-    [inputConfig.value, error]
-  );
+    );
+  }, [error, inputProps.value]);
+
+export default FormField;
