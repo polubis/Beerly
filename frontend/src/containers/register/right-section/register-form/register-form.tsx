@@ -1,43 +1,32 @@
-import React, { useState } from 'react';
-import { finalize } from 'rxjs/operators';
+import React from 'react';
 
 import EmailIcon from '@material-ui/icons/Email';
 import PasswordIcon from '@material-ui/icons/Lock';
 import UsernameIcon from '@material-ui/icons/AccountBox';
 
-import Button from 'ui/button/button';
-import { registerFormConfig, RegisterFormFields } from './register-form.models';
-import FormField, { useForm, FieldsValues } from 'components/shared/form';
-
 import accountsService from 'services/accounts-service';
+import Button from 'ui/button/button';
+import { AccountCreationPayload } from 'src/api/models/payloads/account-creation-payload';
+import { registerFormConfig, RegisterFormFields } from './register-form.models';
+import FormField, { useForm } from 'components/shared/form';
+import { useAPI } from 'src/api/useAPI/useAPI';
 
 import classes from './register-form.scss';
 
 const RegisterForm = () => {
-  const [isCreating, setIsCreating] = useState(false);
-
-  const handleAccountCreation = ({
-    username,
-    email,
-    password
-  }: FieldsValues<RegisterFormFields>) => {
-    if (isCreating) {
-      return;
+  const { handleApiCall } = useAPI<AccountCreationPayload, null>(
+    accountsService.create,
+    res => console.log(res.data),
+    error => {
+      console.log(error.message);
     }
-
-    setIsCreating(true);
-
-    accountsService
-      .create({ username, email, password })
-      .pipe(finalize(() => setIsCreating(false)))
-      .subscribe();
-  };
+  );
 
   const {
     state: { fields, errorsOccured },
     handleTyping,
     handleSubmit
-  } = useForm<RegisterFormFields>(registerFormConfig, handleAccountCreation);
+  } = useForm<RegisterFormFields>(registerFormConfig, handleApiCall);
 
   return (
     <form className={classes['register-form']} onSubmit={handleSubmit}>
