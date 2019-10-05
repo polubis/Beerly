@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 import { constraints } from './constraints';
 
 export class Validator {
@@ -12,7 +14,8 @@ export class Validator {
 
   static one = (validator: Validator): string => validator._error;
 
-  public email = () => this.setErrors(!constraints.email.test(this._value) ? 'Invalid email format' : '');
+  public email = () =>
+    this.setErrors(!constraints.email.test(this._value) ? 'Invalid email format' : '');
 
   public username = () => {
     if (this._value.length < 8) {
@@ -37,8 +40,20 @@ export class Validator {
 
   public comparePasswords = (repeatedPassword: string) =>
     this.setErrors(
-      this._value !== repeatedPassword
-        ? 'Fields "Password" and "Repeated password" must be the same'
+      this._value !== repeatedPassword ? 'Fields "Password" and "Repeated password" differs' : ''
+    );
+
+  public age = (allowedAge = 18) => {
+    const valueAsMoment = moment(this._value, 'DD-MM-YYYY');
+
+    if (!valueAsMoment.isValid()) {
+      return this.setErrors('Invalid date format');
+    }
+
+    return this.setErrors(
+      moment().diff(this._value, 'years') < allowedAge
+        ? `You must be atleast ${allowedAge} old`
         : ''
     );
+  };
 }

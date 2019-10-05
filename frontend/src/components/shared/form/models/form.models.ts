@@ -1,13 +1,12 @@
 export type UseFormReturn<T extends string> = {
   state: FormState<T>;
   setState: (state: FormState<T>) => void;
-  handleTyping: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+  handleChange: (e: any, directKey?: T, directValue?: any) => void;
   handleSubmit: (e: React.ChangeEvent<HTMLFormElement>) => void;
 };
 
 export type FieldsConfig<T extends string> = {
   [S in T]: {
-    initValue?: any;
     connectedWith?: T;
     validate?: (value: string, fields: FieldsState<T>) => string;
   };

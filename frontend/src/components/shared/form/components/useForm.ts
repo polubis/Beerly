@@ -1,10 +1,12 @@
 import { useState, useCallback } from 'react';
 
+import { extractValuesFromState } from '../utils/extractors';
 import { UseFormReturn, FieldsConfig, FieldsValues, FormState, FieldsState } from '..';
 
 export const useForm = <T extends string>(
   fieldsConfig: FieldsConfig<T>,
-  onSuccessSubmit: (fieldsValues: FieldsValues<T>) => void
+  onSuccessSubmit: (fieldsValues: FieldsValues<T>) => void,
+  cachedValues?: Partial<FieldsValues<T>>
 ): UseFormReturn<T> => {
   const createFormState = useCallback((fieldsConfig: FieldsConfig<T>): FormState<T> => {
     const keys = Object.keys(fieldsConfig);
@@ -17,7 +19,7 @@ export const useForm = <T extends string>(
         (state, key) => ({
           ...state,
           [key]: {
-            value: fieldsConfig[key].initValue || '',
+            value: cachedValues ? (cachedValues.hasOwnProperty(key) ? cachedValues[key] : '') : '',
             error: '',
             fieldkey: key
           }
@@ -29,9 +31,15 @@ export const useForm = <T extends string>(
 
   const [state, setState] = useState<FormState<T>>(createFormState(fieldsConfig));
 
-  const handleTyping = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
+  const handleChange = (e: any, directKey?: T, directValue?: any): void => {
     e.persist();
-    const key = e.currentTarget.getAttribute('data-key') as T;
+    const value = directValue !== undefined ? directValue : e.target.value;
+    const key = directKey ? directKey : (e.currentTarget.getAttribute('data-key') as T);
+
+    if (!key) {
+      throw new Error('data-key attribute is missing in given template');
+    }
+
     const { validate, connectedWith } = fieldsConfig[key];
 
     setState(prevState => {
@@ -39,8 +47,8 @@ export const useForm = <T extends string>(
         ...prevState.fields,
         [key]: {
           ...prevState.fields[key],
-          value: e.target.value,
-          error: prevState.dirty && validate ? validate(e.target.value, prevState.fields) : ''
+          value,
+          error: prevState.dirty && validate ? validate(value, prevState.fields) : ''
         }
       };
 
@@ -89,18 +97,14 @@ export const useForm = <T extends string>(
     setState(newState);
 
     if (!errorsOccured) {
-      const fieldsValues = newState.keys.reduce((prev, key) => {
-        return { ...prev, [key]: newState.fields[key].value };
-      }, {});
-
-      onSuccessSubmit(fieldsValues as FieldsValues<T>);
+      onSuccessSubmit(extractValuesFromState<T>(newState));
     }
   };
 
   return {
     state,
     setState,
-    handleTyping,
+    handleChange,
     handleSubmit
   };
 };

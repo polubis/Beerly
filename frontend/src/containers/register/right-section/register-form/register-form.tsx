@@ -1,19 +1,21 @@
-import React from 'react';
-
-import EmailIcon from '@material-ui/icons/Email';
-import PasswordIcon from '@material-ui/icons/Lock';
-import UsernameIcon from '@material-ui/icons/AccountBox';
+import React, { useState } from 'react';
 
 import accountsService from 'services/accounts-service';
-import Button from 'ui/button/button';
 import { AccountCreationPayload } from 'src/api/models/payloads/account-creation-payload';
-import { registerFormConfig, RegisterFormFields } from './register-form.models';
-import FormField, { useForm } from 'components/shared/form';
+import { FieldsValues } from 'components/shared/form';
+import {
+  RegisterFormFirstStepFields,
+  RegisterFormSecondStepFields,
+  RegisterFormStepsCache
+} from './models/register-form.models';
+import RegisterFormFirstStep from './steps/register-form-first-step';
+import RegisterFormSecondStep from './steps/register-form-second-step';
 import { useAPI } from 'src/api/useAPI/useAPI';
 
-import classes from './register-form.scss';
-
 const RegisterForm = () => {
+  const [step, setStep] = useState(0);
+  const [formStepsCache, setFormStepsCache] = useState(new RegisterFormStepsCache());
+
   const { handleApiCall } = useAPI<AccountCreationPayload, null>(
     accountsService.create,
     res => console.log(res.data),
@@ -22,37 +24,40 @@ const RegisterForm = () => {
     }
   );
 
-  const {
-    state: { fields, errorsOccured },
-    handleTyping,
-    handleSubmit
-  } = useForm<RegisterFormFields>(registerFormConfig, handleApiCall);
+  const handleFirstStepSubmit = (fields: FieldsValues<RegisterFormFirstStepFields>) => {
+    setFormStepsCache(prevCache => ({ ...prevCache, 0: fields }));
+    setStep(1);
+  };
 
-  return (
-    <form className={classes['register-form']} onSubmit={handleSubmit}>
-      <FormField
-        autoFocus
-        title="Username"
-        icon={<UsernameIcon />}
-        onChange={handleTyping}
-        {...fields.username}
-      />
-      <FormField title="Email" icon={<EmailIcon />} onChange={handleTyping} {...fields.email} />
-      <FormField
-        title="Password"
-        icon={<PasswordIcon />}
-        onChange={handleTyping}
-        {...fields.password}
-      />
-      <FormField
-        title="Repeated password"
-        icon={<PasswordIcon />}
-        onChange={handleTyping}
-        {...fields.repeatedPassword}
-      />
-      <Button content="Submit" disabled={errorsOccured} />
-    </form>
-  );
+  const handleSecondStepSubmit = (fields: FieldsValues<RegisterFormSecondStepFields>) => {
+    setFormStepsCache(prevCache => ({ ...prevCache, 1: fields }));
+    handleApiCall({ ...formStepsCache[0], ...fields });
+  };
+
+  const handleBack = (fields: FieldsValues<RegisterFormSecondStepFields>) => {
+    setFormStepsCache(prevCache => ({ ...prevCache, 1: fields }));
+    setStep(prevStep => prevStep - 1);
+  };
+
+  switch (step) {
+    case 0:
+      return (
+        <RegisterFormFirstStep
+          onSuccessSubmit={handleFirstStepSubmit}
+          cachedValues={formStepsCache[0]}
+        />
+      );
+    case 1:
+      return (
+        <RegisterFormSecondStep
+          onSuccessSubmit={handleSecondStepSubmit}
+          onBack={handleBack}
+          cachedValues={formStepsCache[1]}
+        />
+      );
+    default:
+      return null;
+  }
 };
 
 export default RegisterForm;

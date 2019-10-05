@@ -17,7 +17,13 @@ const FormField = ({
   ...inputProps
 }: FormFieldProps): JSX.Element => {
   const placeholder = useMemo(() => {
-    return inputProps.placeholder || `Type your ${title.toLowerCase()}...`;
+    return (
+      inputProps.placeholder ||
+      `Type your ${title
+        .toLowerCase()
+        .replace('*', '')
+        .trimRight()}...`
+    );
   }, []);
 
   const content = useMemo(() => {
