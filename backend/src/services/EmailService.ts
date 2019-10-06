@@ -1,12 +1,14 @@
 import { createTransport } from 'nodemailer';
 import { MailOptions } from 'nodemailer/lib/json-transport';
 
+import { EmailConfig } from '../emails/EmailConfig';
+
 export interface IEmailService {
-  sendMail: (consumer: string, subject?: string, text?: string) => void;
+  sendMail: (consumer: string, emailConfig: EmailConfig) => void;
 }
 
 class EmailService implements IEmailService {
-  public sendMail = async (consumer: string, subject?: string, text?: string) => {
+  public sendMail = async (consumer: string, emailConfig: EmailConfig) => {
     const transport = createTransport({
       service: process.env.MAIL_SERVICE,
       host: process.env.MAIL_HOST,
@@ -22,8 +24,9 @@ class EmailService implements IEmailService {
     const options: MailOptions = {
       from: process.env.MAIL_USER,
       to: consumer,
-      subject,
-      text
+      subject: emailConfig.subject,
+      text: emailConfig.text,
+      html: emailConfig.html
     };
 
     await transport.sendMail(options);

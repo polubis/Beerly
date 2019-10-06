@@ -1,8 +1,9 @@
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo, useEffect, useContext } from 'react';
+import { AxiosResponse } from 'axios';
 import { Observable, Subject, of } from 'rxjs';
 import { switchMap, tap, catchError, debounceTime } from 'rxjs/operators';
-import { AxiosResponse } from 'axios';
 
+import { AlertProviderState, AlertProviderContext } from 'components/ui/alert';
 import { ErrorResponse } from '../models/responses/error-response';
 import { parseError } from '../utils/responseParsers';
 import { ParsedError } from '../models/api-errors';
@@ -11,7 +12,10 @@ export const useAPI = <P extends any, R extends any>(
   serviceAsyncMethod: (payload: P) => Observable<AxiosResponse<R>>,
   onSuccess: (response: AxiosResponse<R>) => void = () => {},
   onFailure: (error: ParsedError) => void = () => {}
-): { isSending: boolean; handleApiCall: (payload: P) => void } => {
+): {
+  isSending: boolean;
+  handleApiCall: (payload: P) => void;
+} => {
   const [isSending, setIsSending] = useState(false);
 
   const sending = useMemo(() => new Subject<P>(), []);
@@ -54,4 +58,26 @@ export const useAPI = <P extends any, R extends any>(
     isSending,
     handleApiCall
   };
+};
+
+export const useAPIConnected = <P extends any, R extends any>(
+  serviceAsyncMethod: (payload: P) => Observable<AxiosResponse<R>>,
+  onSuccess: (response: AxiosResponse<R>) => void = () => {},
+  onFailure: (error: ParsedError) => void = () => {}
+) => {
+  const { setAlertProps } = useContext<AlertProviderState>(AlertProviderContext);
+  const useApiReturn = useAPI<P, R>(serviceAsyncMethod, onSuccess, (error: ParsedError) => {
+    setAlertProps({
+      message: error.message,
+      open: true,
+      onClose: () =>
+        setAlertProps({
+          message: '',
+          open: false
+        })
+    });
+    onFailure(error);
+  });
+
+  return useApiReturn;
 };

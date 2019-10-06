@@ -27,7 +27,7 @@ const RegisterFormSecondStep = ({
     registerFormSecondStepConfig,
     onSuccessSubmit,
     {
-      dateOfBirth: '1994-07-07T19:49:20.723Z',
+      dateOfBirth: '1994-07-07',
       policyConfirmation: true
     }
   );

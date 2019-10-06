@@ -1,0 +1,41 @@
+@import '~styles/colors.scss';
+@import '~styles/variables.scss';
+@import '~styles/media.scss';
+
+.alert {
+  position: fixed;
+  bottom: 15px;
+  width: 450px;
+  padding: 15px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  border-radius: 2px;
+  z-index: 2;
+  box-shadow: $bold-shadow;
+
+  @media #{$mobile-only} {
+    width: 94%;
+  }
+
+  &-error {
+    background: $red;
+    color: $white;
+  }
+
+  &-animated-in {
+    animation: alert-animated 0.3s $transition forwards;
+
+    @keyframes alert-animated {
+      from {
+        opacity: 0;
+        transform: translateY(15px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  }
+}

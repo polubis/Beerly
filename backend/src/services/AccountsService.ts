@@ -1,10 +1,10 @@
 import { getCustomRepository } from 'typeorm';
 import { hash, compare } from 'bcrypt';
 
-import { BadRequest, Forbidden } from '../utils/exceptions';
-import { CreateAccountEmailContent } from '../utils/emails-contents';
-import { CreateAccountFormData } from '../dtos/incoming/CreateAccountFormData';
 import { Account } from '../entities/Account';
+import { BadRequest, Forbidden } from '../utils/exceptions';
+import { CreateAccountFormData } from '../dtos/incoming/CreateAccountFormData';
+import { getAccountCreationConfig } from '../emails/account-creation-config';
 import { User } from '../entities/User';
 
 import { AccountsRepository } from '../repositories/AccountsRepository';
@@ -46,8 +46,13 @@ class AccountsService implements IAccountsService {
 
     await accountsRepository.createAndSave(newAccount);
 
-    const { text, subject } = new CreateAccountEmailContent();
-    await emailService.sendMail(data.email, text, subject);
+    await emailService.sendMail(
+      data.email,
+      getAccountCreationConfig(
+        data.username,
+        `${process.env.REDIRECTION_URL_DEV}/register?confirmation=${confirmationLink}`
+      )
+    );
 
     return Promise.resolve(undefined);
   };
