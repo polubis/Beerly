@@ -41,7 +41,7 @@
       background: $main;
       height: 1px;
       transform: translateX(-101%);
-      transition: $fast transform $transition;
+      transition: 0.3s transform $transition;
       will-change: transform;
     }
 

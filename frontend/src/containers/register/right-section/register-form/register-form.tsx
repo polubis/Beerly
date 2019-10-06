@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 
 import accountsService from 'services/accounts-service';
+
 import { AccountCreationPayload } from 'src/api/models/payloads/account-creation-payload';
+import Loader from 'ui/loader/loader';
 import { FieldsValues } from 'components/shared/form';
 import {
   RegisterFormFirstStepFields,
@@ -16,7 +18,7 @@ const RegisterForm = () => {
   const [step, setStep] = useState(0);
   const [formStepsCache, setFormStepsCache] = useState(new RegisterFormStepsCache());
 
-  const { handleApiCall } = useAPI<AccountCreationPayload, null>(
+  const { isSending, handleApiCall } = useAPI<AccountCreationPayload, null>(
     accountsService.create,
     res => console.log(res.data),
     error => {
@@ -30,7 +32,6 @@ const RegisterForm = () => {
   };
 
   const handleSecondStepSubmit = (fields: FieldsValues<RegisterFormSecondStepFields>) => {
-    setFormStepsCache(prevCache => ({ ...prevCache, 1: fields }));
     handleApiCall({ ...formStepsCache[0], ...fields });
   };
 
@@ -39,25 +40,24 @@ const RegisterForm = () => {
     setStep(prevStep => prevStep - 1);
   };
 
-  switch (step) {
-    case 0:
-      return (
+  return (
+    <>
+      {isSending && <Loader overlayed />}
+
+      {step === 0 ? (
         <RegisterFormFirstStep
           onSuccessSubmit={handleFirstStepSubmit}
           cachedValues={formStepsCache[0]}
         />
-      );
-    case 1:
-      return (
+      ) : (
         <RegisterFormSecondStep
           onSuccessSubmit={handleSecondStepSubmit}
           onBack={handleBack}
           cachedValues={formStepsCache[1]}
         />
-      );
-    default:
-      return null;
-  }
+      )}
+    </>
+  );
 };
 
 export default RegisterForm;

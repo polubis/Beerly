@@ -21,6 +21,8 @@
     box-shadow: $thin-shadow;
     background: $white;
     color: $main;
+    position: relative;
+    overflow: hidden;
 
     h3 {
       font-size: 22px;

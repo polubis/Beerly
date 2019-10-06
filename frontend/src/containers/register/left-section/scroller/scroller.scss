@@ -7,7 +7,7 @@
   right: calc(40vw + 25px);
 
   svg {
-    transition: $fast transform $transition;
+    transition: 0.3s transform $transition;
     transform: rotate(0);
   }
 

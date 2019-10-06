@@ -26,7 +26,10 @@ const RegisterFormSecondStep = ({
   const { state, handleChange, handleSubmit } = useForm<RegisterFormSecondStepFields>(
     registerFormSecondStepConfig,
     onSuccessSubmit,
-    cachedValues
+    {
+      dateOfBirth: '1994-07-07T19:49:20.723Z',
+      policyConfirmation: true
+    }
   );
 
   const { fields, errorsOccured } = state;

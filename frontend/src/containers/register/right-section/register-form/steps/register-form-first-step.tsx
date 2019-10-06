@@ -23,11 +23,12 @@ const RegisterFormFirstStep = ({ onSuccessSubmit, cachedValues }: RegisterFormFi
     state: { fields, errorsOccured },
     handleChange,
     handleSubmit
-  } = useForm<RegisterFormFirstStepFields>(
-    registerFormFirstStepConfig,
-    onSuccessSubmit,
-    cachedValues
-  );
+  } = useForm<RegisterFormFirstStepFields>(registerFormFirstStepConfig, onSuccessSubmit, {
+    username: 'piotr1994',
+    email: 'polubik1994@gmail.com',
+    password: 'piotr1994',
+    repeatedPassword: 'piotr1994'
+  });
 
   return (
     <>

@@ -33,7 +33,7 @@
       margin: 0 auto;
       left: 0;
       opacity: 0;
-      transition: $fast opacity;
+      transition: 0.3s opacity;
       will-change: opacity;
       right: 0;
     }
