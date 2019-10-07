@@ -5,17 +5,10 @@ export class User {
   @PrimaryGeneratedColumn()
   public id: number;
 
-  @Column({
-    length: 50
-  })
-  public username: string;
-
   @Column()
   public modificationDate: Date;
 
-  @Column({
-    nullable: true
-  })
+  @Column()
   public dateOfBirth: Date;
 
   @Column({

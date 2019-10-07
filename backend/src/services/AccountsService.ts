@@ -12,7 +12,7 @@ import { AccountsRepository } from '../repositories/AccountsRepository';
 import emailService from './EmailService';
 
 interface IAccountsService {
-  createAccount: (formData: CreateAccountFormData) => Promise<undefined>;
+  createAccount: (formData: CreateAccountFormData) => Promise<void>;
   getAccount: (email: string) => Promise<Account>;
   checkPassword: (typedPassword: string, foundUserPassword: string) => Promise<boolean>;
   deleteAccount: (accountId: number) => Promise<void>;
@@ -21,24 +21,25 @@ interface IAccountsService {
 class AccountsService implements IAccountsService {
   public createAccount = async (data: CreateAccountFormData) => {
     const accountsRepository = getCustomRepository(AccountsRepository);
-    const foundAccount = await accountsRepository.findByEmail(data.email);
+    const foundAccount = await accountsRepository.findByEmailOrUsername(data.email, data.username);
 
     if (foundAccount) {
       throw new BadRequest('Account with given data already exists');
     }
 
     const accountCreationDate = new Date();
-    const confirmationLink = await hash(accountCreationDate.toDateString(), 10);
+    const confirmationLink = (await hash(accountCreationDate.toDateString(), 10));
 
     const password = await hash(data.password, 10);
     const newAccount: Account = {
       ...new Account(),
       email: data.email,
+      username: data.username,
       password,
       confirmationLink,
+      accountRequestDate: accountCreationDate,
       user: {
         ...new User(),
-        username: data.username,
         dateOfBirth: data.dateOfBirth,
         modificationDate: accountCreationDate
       }
@@ -54,7 +55,7 @@ class AccountsService implements IAccountsService {
       )
     );
 
-    return Promise.resolve(undefined);
+    return Promise.resolve();
   };
 
   public getAccount = async (email: string) => {
@@ -80,6 +81,21 @@ class AccountsService implements IAccountsService {
     }
 
     await accountsRepository.removeAccount(foundAccount.id);
+
+    return Promise.resolve();
+  };
+
+  public confirmAccount = async (confirmationLink: string) => {
+    const accountsRepository = getCustomRepository(AccountsRepository);
+    const account = await accountsRepository.findByConfirmationLink(confirmationLink.trim());
+
+    if (!account) {
+      throw new BadRequest('Invalid confirmation link');
+    }
+
+    // await accountsRepository.setAccountAsActive();
+
+    console.log(confirmationLink);
 
     return Promise.resolve();
   };

@@ -6,6 +6,11 @@ import { User } from './User';
 @Entity('Account')
 export class Account extends Base {
   @Column({
+    length: 20
+  })
+  public username: string;
+
+  @Column({
     length: 100
   })
   public email: string;
@@ -19,6 +24,9 @@ export class Account extends Base {
     nullable: true
   })
   public confirmationLink: string;
+
+  @Column()
+  public accountRequestDate: Date;
 
   @OneToOne(type => User, { cascade: true, onDelete: 'CASCADE' })
   @JoinColumn()

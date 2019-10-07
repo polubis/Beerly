@@ -11,7 +11,6 @@ import { parseFailure } from './utils/response-parsers';
 
 import accountsController from './controllers/AccountsController';
 import authorizationController from './controllers/AuthorizationController';
-import usersController from './controllers/UsersController';
 import accountsService from './services/AccountsService';
 import { BadRequest } from './utils/exceptions';
 
@@ -65,7 +64,6 @@ export default class App {
 
     app.use('/api/accounts', accountsController);
     app.use('/api/auth', authorizationController);
-    app.use('/api/users', usersController);
 
     app.use((error: Error, req: Request, res: Response, next: NextFunction) => {
       parseFailure(error, res);
