@@ -8,7 +8,7 @@ import { ErrorResponse } from '../models/responses/error-response';
 import { parseError } from '../utils/responseParsers';
 import { ParsedError } from '../models/api-errors';
 
-export const useAPI = <P extends any, R extends any>(
+export const useApi = <P extends any, R extends any>(
   serviceAsyncMethod: (payload: P) => Observable<AxiosResponse<R>>,
   onSuccess: (response: AxiosResponse<R>) => void = () => {},
   onFailure: (error: ParsedError) => void = () => {}
@@ -43,7 +43,9 @@ export const useAPI = <P extends any, R extends any>(
   );
 
   const handleApiCall = (payload: P) => {
-    sending.next(payload);
+    if (!isSending) {
+      sending.next(payload);
+    }
   };
 
   useEffect(() => {
@@ -60,13 +62,14 @@ export const useAPI = <P extends any, R extends any>(
   };
 };
 
-export const useAPIConnected = <P extends any, R extends any>(
+export const useApiWithAlert = <P extends any, R extends any>(
   serviceAsyncMethod: (payload: P) => Observable<AxiosResponse<R>>,
   onSuccess: (response: AxiosResponse<R>) => void = () => {},
   onFailure: (error: ParsedError) => void = () => {}
 ) => {
   const { setAlertProps } = useContext<AlertProviderState>(AlertProviderContext);
-  const useApiReturn = useAPI<P, R>(serviceAsyncMethod, onSuccess, (error: ParsedError) => {
+
+  return useApi<P, R>(serviceAsyncMethod, onSuccess, (error: ParsedError) => {
     setAlertProps({
       message: error.message,
       open: true,
@@ -78,6 +81,4 @@ export const useAPIConnected = <P extends any, R extends any>(
     });
     onFailure(error);
   });
-
-  return useApiReturn;
 };

@@ -32,9 +32,15 @@ export const useForm = <T extends string>(
   const [state, setState] = useState<FormState<T>>(createFormState(fieldsConfig));
 
   const handleChange = (e: any, directKey?: T, directValue?: any): void => {
+    if (!e) {
+      throw new Error('Event object is required');
+    }
+
     e.persist();
+
     const value = directValue !== undefined ? directValue : e.target.value;
-    const key = directKey ? directKey : (e.currentTarget.getAttribute('data-key') as T);
+    const key =
+      directKey !== undefined ? directKey : (e.currentTarget.getAttribute('data-key') as T);
 
     if (!key) {
       throw new Error('data-key attribute is missing in given template');

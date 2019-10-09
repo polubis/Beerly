@@ -12,13 +12,13 @@ import {
 } from './models/register-form.models';
 import RegisterFormFirstStep from './steps/register-form-first-step';
 import RegisterFormSecondStep from './steps/register-form-second-step';
-import { useAPIConnected } from 'src/api/useAPI/useAPI';
+import { useApiWithAlert } from 'src/api/useAPI/useAPI';
 
 const RegisterForm = () => {
   const [step, setStep] = useState(0);
   const [formStepsCache, setFormStepsCache] = useState(new RegisterFormStepsCache());
 
-  const { isSending, handleApiCall } = useAPIConnected<AccountCreationPayload, null>(
+  const { isSending, handleApiCall } = useApiWithAlert<AccountCreationPayload, null>(
     accountsService.create,
     res => console.log(res.data)
   );

@@ -1,0 +1,241 @@
+import { renderHook, act } from '@testing-library/react-hooks';
+import { useForm, FieldsConfig } from '..';
+import { FieldsState, FieldsValues } from '../models/form.models';
+
+fdescribe('useForm()', () => {
+  type MockFieldsConfig = 'username' | 'description' | 'label' | 'cost' | 'percentage';
+  let config: FieldsConfig<MockFieldsConfig>;
+
+  const getFieldObject = (fieldkey: MockFieldsConfig) => ({
+    fieldkey,
+    error: '',
+    value: ''
+  });
+
+  const getEventMock = (value: string, dataKey?: MockFieldsConfig) => ({
+    target: { value },
+    persist: () => {},
+    currentTarget: { getAttribute: () => dataKey }
+  });
+
+  beforeEach(() => {
+    config = {
+      username: {},
+      description: {},
+      label: {},
+      cost: {},
+      percentage: {}
+    };
+  });
+
+  test('should create initial state', () => {
+    const {
+      result: { current }
+    } = renderHook(() => useForm<MockFieldsConfig>(config, () => {}));
+
+    expect(current.state.dirty).toBe(false);
+    expect(current.state.errorsOccured).toBe(false);
+    expect(current.state.keys).toEqual(Object.keys(config));
+    expect(current.state.fields).toEqual({
+      username: getFieldObject('username'),
+      description: getFieldObject('description'),
+      label: getFieldObject('label'),
+      cost: getFieldObject('cost'),
+      percentage: getFieldObject('percentage')
+    } as FieldsState<MockFieldsConfig>);
+  });
+
+  test('should populate initial state with provided cached values', () => {
+    const cacheMock: Partial<FieldsValues<MockFieldsConfig>> = {
+      username: 'Piotr',
+      description: 'Example description',
+      cost: 3.43
+    };
+
+    const {
+      result: { current }
+    } = renderHook(() => useForm<MockFieldsConfig>(config, () => {}, cacheMock));
+
+    expect(current.state.fields.username.value).toEqual(cacheMock.username);
+    expect(current.state.fields.description.value).toEqual(cacheMock.description);
+    expect(current.state.fields.cost.value).toEqual(cacheMock.cost);
+    expect(current.state.fields.label.value).toBe('');
+    expect(current.state.fields.percentage.value).toBe('');
+  });
+
+  describe('handleTyping()', () => {
+    test('should set new value from event object is not passed', () => {
+      const { result } = renderHook(() => useForm<MockFieldsConfig>(config, result => result));
+
+      act(() => {
+        try {
+          result.current.handleChange(null, 'username', 'exmaple-username');
+          expect(true).toBe(false);
+        } catch (e) {
+          expect(e.message).toEqual('Event object is required');
+        }
+      });
+    });
+
+    test('should throw error if data key is not passed in event object and as dataKey parameter', () => {
+      const {
+        result: { current }
+      } = renderHook(() => useForm<MockFieldsConfig>(config, result => result));
+
+      act(() => {
+        try {
+          current.handleChange(getEventMock('example-value'));
+          expect(true).toBe(false);
+        } catch (e) {
+          expect(e.message).toEqual('data-key attribute is missing in given template');
+        }
+      });
+    });
+
+    test('should set new value from directValue parameter', () => {
+      const mockName = 'example-name';
+      const { result } = renderHook(() => useForm<MockFieldsConfig>(config, result => result));
+
+      act(() => {
+        result.current.handleChange(
+          getEventMock('example-2-username', 'username'),
+          'username',
+          mockName
+        );
+      });
+
+      expect(result.current.state.fields.username.value).toBe(mockName);
+    });
+
+    test('should set value based on key from directKey parameter', () => {
+      const mockName = 'example-name';
+      const { result } = renderHook(() => useForm<MockFieldsConfig>(config, result => result));
+
+      act(() => {
+        result.current.handleChange({ persist: () => {} }, 'username', mockName);
+      });
+
+      expect(result.current.state.fields.username.value).toBe(mockName);
+    });
+
+    test('should set error based on given validators in config if form is dirty', () => {
+      const { result } = renderHook(() =>
+        useForm<MockFieldsConfig>(
+          {
+            ...config,
+            username: {
+              validate: (value, state) => {
+                if (value.length === 0) {
+                  return 'Error';
+                }
+
+                return '';
+              }
+            }
+          },
+          result => result
+        )
+      );
+
+      act(() => {
+        result.current.handleSubmit({ preventDefault: () => {} } as any);
+        result.current.handleChange({ persist: () => {} }, 'username', '');
+      });
+
+      expect(result.current.state.fields.username.error).toBe('Error');
+    });
+
+    test('should avoid validation if form is not dirty', () => {
+      const { result } = renderHook(() =>
+        useForm<MockFieldsConfig>(
+          {
+            ...config,
+            username: {
+              validate: (value, state) => {
+                if (value.length === 0) {
+                  return 'Error';
+                }
+
+                return '';
+              }
+            }
+          },
+          result => result
+        )
+      );
+
+      act(() => {
+        result.current.handleChange({ persist: () => {} }, 'username', '');
+      });
+
+      expect(result.current.state.fields.username.error).toBe('');
+    });
+
+    test('should set errors occured if form is dirty', () => {
+      const { result } = renderHook(() =>
+        useForm<MockFieldsConfig>(
+          {
+            ...config,
+            username: {
+              validate: (value, state) => {
+                if (value.length === 1) {
+                  return 'Error';
+                }
+
+                return '';
+              }
+            }
+          },
+          result => result
+        )
+      );
+
+      act(() => {
+        result.current.handleSubmit({ preventDefault: () => {} } as any);
+        result.current.handleChange({ persist: () => {} }, 'username', 's');
+      });
+
+      expect(result.current.state.fields.username.error).toBe('Error');
+      expect(result.current.state.errorsOccured).toBe(true);
+      expect(result.current.state.dirty).toBe(true);
+    });
+
+    test('should call validate method for connected field', () => {
+      const { result } = renderHook(() =>
+        useForm<MockFieldsConfig>(
+          {
+            ...config,
+            username: {
+              validate: (value, state) => {
+                if (value.length === 1) {
+                  return 'Error';
+                }
+
+                return '';
+              }
+            },
+            description: {
+              validate: (value, state) => {
+                if (value.length === 1) {
+                  return 'Error';
+                }
+
+                return '';
+              }
+            }
+          },
+          result => result,
+          { description: 's' }
+        )
+      );
+
+      act(() => {
+        result.current.handleSubmit({ preventDefault: () => {} } as any);
+        result.current.handleChange({ persist: () => {} }, 'username', 's');
+      });
+
+      expect(result.current.state.fields.username.error).toBe('Error');
+      expect(result.current.state.fields.description.error).toBe('Error');
+    });
+  });
+});

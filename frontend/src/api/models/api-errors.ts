@@ -5,7 +5,7 @@ export abstract class Error {
 
 export class NoInternetError extends Error {
   status = 0;
-  message = 'No internet connection';
+  message = 'No server response';
 }
 
 export class ServerError extends Error {

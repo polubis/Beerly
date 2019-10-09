@@ -5,11 +5,13 @@ interface CssExports {
   'animate-bubble': string;
   'animate-foam': string;
   'bubble': string;
+  'fade-in': string;
   'foam': string;
   'glass': string;
   'handle': string;
   'loader': string;
   'loader-overlayed': string;
+  'overlay-in': string;
 }
 declare var cssExports: CssExports;
 export = cssExports;

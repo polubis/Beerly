@@ -13,22 +13,21 @@ import {
 
 import classes from './register-form-steps.scss';
 
-type RegisterFormFirstStep = {
+type RegisterFormFirstStepProps = {
   onSuccessSubmit: (fields: FieldsValues<RegisterFormFirstStepFields>) => void;
   cachedValues: FieldsValues<RegisterFormFirstStepFields>;
 };
 
-const RegisterFormFirstStep = ({ onSuccessSubmit, cachedValues }: RegisterFormFirstStep) => {
+const RegisterFormFirstStep = ({ onSuccessSubmit, cachedValues }: RegisterFormFirstStepProps) => {
   const {
     state: { fields, errorsOccured },
     handleChange,
     handleSubmit
-  } = useForm<RegisterFormFirstStepFields>(registerFormFirstStepConfig, onSuccessSubmit, {
-    username: 'piotr1994',
-    email: 'polubik1994@gmail.com',
-    password: 'piotr1994',
-    repeatedPassword: 'piotr1994'
-  });
+  } = useForm<RegisterFormFirstStepFields>(
+    registerFormFirstStepConfig,
+    onSuccessSubmit,
+    cachedValues
+  );
 
   return (
     <>

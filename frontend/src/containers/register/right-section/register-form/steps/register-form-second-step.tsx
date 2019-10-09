@@ -12,7 +12,7 @@ import {
 
 import classes from './register-form-steps.scss';
 
-type RegisterFormSecondStep = {
+type RegisterFormSecondStepProps = {
   onSuccessSubmit: (fields: FieldsValues<RegisterFormSecondStepFields>) => void;
   onBack: (fields: FieldsValues<RegisterFormSecondStepFields>) => void;
   cachedValues: FieldsValues<RegisterFormSecondStepFields>;
@@ -22,14 +22,11 @@ const RegisterFormSecondStep = ({
   onSuccessSubmit,
   onBack,
   cachedValues
-}: RegisterFormSecondStep) => {
+}: RegisterFormSecondStepProps) => {
   const { state, handleChange, handleSubmit } = useForm<RegisterFormSecondStepFields>(
     registerFormSecondStepConfig,
     onSuccessSubmit,
-    {
-      dateOfBirth: '1994-07-07',
-      policyConfirmation: true
-    }
+    cachedValues
   );
 
   const { fields, errorsOccured } = state;

@@ -10,7 +10,7 @@ export class Validator {
     return this;
   }
 
-  constructor(public _value: string = '') {}
+  constructor(private _value: string = '') {}
 
   static one = (validator: Validator): string => validator._error;
 
