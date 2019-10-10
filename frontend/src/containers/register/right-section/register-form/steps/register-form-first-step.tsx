@@ -5,7 +5,7 @@ import PasswordIcon from '@material-ui/icons/Lock';
 import UsernameIcon from '@material-ui/icons/AccountBox';
 
 import Button from 'ui/button/button';
-import FormField, { useForm, FieldsValues } from 'components/shared/form';
+import FormField, { useForm, FieldsValues, ValidationStrategy } from 'components/shared/form';
 import {
   RegisterFormFirstStepFields,
   registerFormFirstStepConfig
@@ -26,7 +26,8 @@ const RegisterFormFirstStep = ({ onSuccessSubmit, cachedValues }: RegisterFormFi
   } = useForm<RegisterFormFirstStepFields>(
     registerFormFirstStepConfig,
     onSuccessSubmit,
-    cachedValues
+    cachedValues,
+    ValidationStrategy.AfterSubmit
   );
 
   return (

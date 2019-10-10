@@ -26,3 +26,8 @@ export type FormState<T extends string> = {
   dirty: boolean;
   errorsOccured: boolean;
 };
+
+export enum ValidationStrategy {
+  AfterInput = 'AfterInput',
+  AfterSubmit = 'AfterSubmit'
+}

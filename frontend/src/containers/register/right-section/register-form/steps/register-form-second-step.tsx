@@ -4,7 +4,7 @@ import DateRangeIcon from '@material-ui/icons/DateRange';
 
 import Button from 'ui/button/button';
 import Checkbox from 'ui/checkbox/checkbox';
-import FormField, { useForm, FieldsValues, extractValuesFromState } from 'components/shared/form';
+import FormField, { useForm, FieldsValues, extractValuesFromState, ValidationStrategy } from 'components/shared/form';
 import {
   registerFormSecondStepConfig,
   RegisterFormSecondStepFields
@@ -26,7 +26,8 @@ const RegisterFormSecondStep = ({
   const { state, handleChange, handleSubmit } = useForm<RegisterFormSecondStepFields>(
     registerFormSecondStepConfig,
     onSuccessSubmit,
-    cachedValues
+    cachedValues,
+    ValidationStrategy.AfterSubmit
   );
 
   const { fields, errorsOccured } = state;

@@ -1,18 +1,26 @@
 import { useState, useCallback } from 'react';
 
-import { extractValuesFromState } from '../utils/extractors';
-import { UseFormReturn, FieldsConfig, FieldsValues, FormState, FieldsState } from '..';
+import {
+  UseFormReturn,
+  FieldsConfig,
+  FieldsValues,
+  FormState,
+  FieldsState,
+  extractValuesFromState
+} from '..';
+import { ValidationStrategy } from '../models/form.models';
 
 export const useForm = <T extends string>(
   fieldsConfig: FieldsConfig<T>,
   onSuccessSubmit: (fieldsValues: FieldsValues<T>) => void,
-  cachedValues?: Partial<FieldsValues<T>>
+  cachedValues?: Partial<FieldsValues<T>>,
+  validationStrategy: ValidationStrategy = ValidationStrategy.AfterInput
 ): UseFormReturn<T> => {
   const createFormState = useCallback((fieldsConfig: FieldsConfig<T>): FormState<T> => {
     const keys = Object.keys(fieldsConfig);
 
     return {
-      dirty: false,
+      dirty: validationStrategy === ValidationStrategy.AfterInput,
       errorsOccured: false,
       keys,
       fields: keys.reduce(
