@@ -65,7 +65,7 @@ fdescribe('useForm()', () => {
 
   describe('handleTyping()', () => {
     test('should set new value from event object is not passed', () => {
-      const { result } = renderHook(() => useForm<MockFieldsConfig>(config, result => result));
+      const { result } = renderHook(() => useForm<MockFieldsConfig>(config, () => {}));
 
       act(() => {
         try {
@@ -77,10 +77,10 @@ fdescribe('useForm()', () => {
       });
     });
 
-    test('should throw error if data key is not passed in event object and as dataKey parameter', () => {
+    test('should throw error if data key is not passed in event object as dataKey parameter', () => {
       const {
         result: { current }
-      } = renderHook(() => useForm<MockFieldsConfig>(config, result => result));
+      } = renderHook(() => useForm<MockFieldsConfig>(config, () => {}));
 
       act(() => {
         try {
@@ -94,7 +94,7 @@ fdescribe('useForm()', () => {
 
     test('should set new value from directValue parameter', () => {
       const mockName = 'example-name';
-      const { result } = renderHook(() => useForm<MockFieldsConfig>(config, result => result));
+      const { result } = renderHook(() => useForm<MockFieldsConfig>(config, () => {}));
 
       act(() => {
         result.current.handleChange(
@@ -109,7 +109,7 @@ fdescribe('useForm()', () => {
 
     test('should set value based on key from directKey parameter', () => {
       const mockName = 'example-name';
-      const { result } = renderHook(() => useForm<MockFieldsConfig>(config, result => result));
+      const { result } = renderHook(() => useForm<MockFieldsConfig>(config, () => {}));
 
       act(() => {
         result.current.handleChange({ persist: () => {} }, 'username', mockName);
@@ -133,7 +133,7 @@ fdescribe('useForm()', () => {
               }
             }
           },
-          result => result
+          () => {}
         )
       );
 
@@ -160,7 +160,7 @@ fdescribe('useForm()', () => {
               }
             }
           },
-          result => result
+          () => {}
         )
       );
 
@@ -186,7 +186,7 @@ fdescribe('useForm()', () => {
               }
             }
           },
-          result => result
+          () => {}
         )
       );
 
@@ -224,7 +224,7 @@ fdescribe('useForm()', () => {
               }
             }
           },
-          result => result,
+          () => {},
           { description: 's' }
         )
       );
@@ -236,6 +236,92 @@ fdescribe('useForm()', () => {
 
       expect(result.current.state.fields.username.error).toBe('Error');
       expect(result.current.state.fields.description.error).toBe('Error');
+    });
+  });
+
+  describe('handleSubmit()', () => {
+    test('should set dirty attribute after submit', () => {
+      const { result } = renderHook(() => useForm<MockFieldsConfig>(config, () => {}));
+
+      act(() => {
+        result.current.handleSubmit({ preventDefault: () => {} } as any);
+      });
+
+      expect(result.current.state.dirty).toBe(true);
+    });
+
+    test('should set errorsOccured if errors will be detected', () => {
+      const { result } = renderHook(() =>
+        useForm<MockFieldsConfig>(
+          {
+            ...config,
+            username: {
+              validate: (v, s) => {
+                if (v.length === 0) {
+                  return 'Username field is required';
+                }
+                return '';
+              }
+            }
+          },
+          () => {}
+        )
+      );
+
+      act(() => {
+        result.current.handleSubmit({ preventDefault: () => {} } as any);
+      });
+
+      expect(result.current.state.errorsOccured).toBe(true);
+    });
+
+    test('should call all validate methods and set errors', () => {
+      const { result } = renderHook(() =>
+        useForm<MockFieldsConfig>(
+          {
+            ...config,
+            username: {
+              validate: (v, s) => {
+                if (v.length === 0) {
+                  return 'Username field is required';
+                }
+                return '';
+              }
+            }
+          },
+          () => {}
+        )
+      );
+
+      act(() => {
+        result.current.handleSubmit({ preventDefault: () => {} } as any);
+      });
+
+      expect(result.current.state.fields.username.error).toBe('Username field is required');
+    });
+
+    test('should call onSuccessSubmit callback if no errors detected', () => {
+      const { result } = renderHook(() =>
+        useForm<MockFieldsConfig>(config, values => {
+          expect(values).toEqual({
+            username: 's',
+            description: '',
+            cost: '',
+            label: '',
+            percentage: ''
+          } as FieldsValues<MockFieldsConfig>);
+        })
+      );
+
+      act(() => {
+        result.current.handleChange({ persist: () => {} }, 'username', 's');
+      });
+
+      act(() => {
+        result.current.handleSubmit({ preventDefault: () => {} } as any);
+      });
+
+      expect(result.current.state.errorsOccured).toBe(false);
     });
   });
 });

@@ -38,10 +38,8 @@ export class Validator {
         : ''
     );
 
-  public comparePasswords = (repeatedPassword: string) =>
-    this.setErrors(
-      this._value !== repeatedPassword ? 'Fields "Password" and "Repeated password" differs' : ''
-    );
+  public compare = (valueToCompare: string, message: string) =>
+    this.setErrors(this._value !== valueToCompare ? message : '');
 
   public age = (allowedAge = 18) => {
     const valueAsMoment = moment(this._value, 'DD-MM-YYYY');

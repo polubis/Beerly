@@ -31,11 +31,16 @@ export const registerFormFirstStepConfig: FieldsConfig<RegisterFormFirstStepFiel
   password: {
     connectedWith: 'repeatedPassword',
     validate: (val, { repeatedPassword: { value } }) =>
-      V.one(new V(val).password().comparePasswords(value))
+      V.one(
+        new V(val).password().compare(value, 'Fields "Password" and "Repeated password" differs')
+      )
   },
   repeatedPassword: {
     connectedWith: 'password',
-    validate: (val, { password: { value } }) => V.one(new V(val).password().comparePasswords(value))
+    validate: (val, { password: { value } }) =>
+      V.one(
+        new V(val).password().compare(value, 'Fields "Password" and "Repeated password" differs')
+      )
   }
 };
 
