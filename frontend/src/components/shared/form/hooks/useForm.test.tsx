@@ -1,6 +1,6 @@
 import { renderHook, act } from '@testing-library/react-hooks';
 import { useForm, FieldsConfig } from '..';
-import { FieldsState, FieldsValues } from '../models/form.models';
+import { FieldsState, FieldsValues, ValidationStrategy } from '../models/form.models';
 
 fdescribe('useForm()', () => {
   type MockFieldsConfig = 'username' | 'description' | 'label' | 'cost' | 'percentage';
@@ -14,7 +14,6 @@ fdescribe('useForm()', () => {
 
   const getEventMock = (value: string, dataKey?: MockFieldsConfig) => ({
     target: { value },
-    persist: () => {},
     currentTarget: { getAttribute: () => dataKey }
   });
 
@@ -33,7 +32,6 @@ fdescribe('useForm()', () => {
       result: { current }
     } = renderHook(() => useForm<MockFieldsConfig>(config, () => {}));
 
-    expect(current.state.dirty).toBe(false);
     expect(current.state.errorsOccured).toBe(false);
     expect(current.state.keys).toEqual(Object.keys(config));
     expect(current.state.fields).toEqual({
@@ -43,6 +41,24 @@ fdescribe('useForm()', () => {
       cost: getFieldObject('cost'),
       percentage: getFieldObject('percentage')
     } as FieldsState<MockFieldsConfig>);
+  });
+
+  test('should set dirty parameter as true by default', () => {
+    const {
+      result: { current }
+    } = renderHook(() => useForm<MockFieldsConfig>(config, () => {}));
+
+    expect(current.state.dirty).toBe(true);
+  });
+
+  test('should set dirty parameter as false if given ValidationStrategy is AfterSubmit', () => {
+    const {
+      result: { current }
+    } = renderHook(() =>
+      useForm<MockFieldsConfig>(config, () => {}, {}, ValidationStrategy.AfterSubmit)
+    );
+
+    expect(current.state.dirty).toBe(false);
   });
 
   test('should populate initial state with provided cached values', () => {
@@ -112,7 +128,7 @@ fdescribe('useForm()', () => {
       const { result } = renderHook(() => useForm<MockFieldsConfig>(config, () => {}));
 
       act(() => {
-        result.current.handleChange({ persist: () => {} }, 'username', mockName);
+        result.current.handleChange({}, 'username', mockName);
       });
 
       expect(result.current.state.fields.username.value).toBe(mockName);
@@ -139,13 +155,13 @@ fdescribe('useForm()', () => {
 
       act(() => {
         result.current.handleSubmit({ preventDefault: () => {} } as any);
-        result.current.handleChange({ persist: () => {} }, 'username', '');
+        result.current.handleChange({}, 'username', '');
       });
 
       expect(result.current.state.fields.username.error).toBe('Error');
     });
 
-    test('should avoid validation if form is not dirty', () => {
+    test('should avoid validation if form is not dirty and validation strategy is AfterSubmit', () => {
       const { result } = renderHook(() =>
         useForm<MockFieldsConfig>(
           {
@@ -160,12 +176,14 @@ fdescribe('useForm()', () => {
               }
             }
           },
-          () => {}
+          () => {},
+          {},
+          ValidationStrategy.AfterSubmit
         )
       );
 
       act(() => {
-        result.current.handleChange({ persist: () => {} }, 'username', '');
+        result.current.handleChange({}, 'username', '');
       });
 
       expect(result.current.state.fields.username.error).toBe('');
@@ -192,7 +210,7 @@ fdescribe('useForm()', () => {
 
       act(() => {
         result.current.handleSubmit({ preventDefault: () => {} } as any);
-        result.current.handleChange({ persist: () => {} }, 'username', 's');
+        result.current.handleChange({}, 'username', 's');
       });
 
       expect(result.current.state.fields.username.error).toBe('Error');
@@ -231,7 +249,7 @@ fdescribe('useForm()', () => {
 
       act(() => {
         result.current.handleSubmit({ preventDefault: () => {} } as any);
-        result.current.handleChange({ persist: () => {} }, 'username', 's');
+        result.current.handleChange({}, 'username', 's');
       });
 
       expect(result.current.state.fields.username.error).toBe('Error');
@@ -314,7 +332,7 @@ fdescribe('useForm()', () => {
       );
 
       act(() => {
-        result.current.handleChange({ persist: () => {} }, 'username', 's');
+        result.current.handleChange({}, 'username', 's');
       });
 
       act(() => {

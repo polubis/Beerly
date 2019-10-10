@@ -44,8 +44,6 @@ export const useForm = <T extends string>(
       throw new Error('Event object is required');
     }
 
-    e.persist();
-
     const value = directValue !== undefined ? directValue : e.target.value;
     const key =
       directKey !== undefined ? directKey : (e.currentTarget.getAttribute('data-key') as T);
