@@ -9,7 +9,7 @@ import FormField, { useForm, FieldsValues, ValidationStrategy } from 'components
 import {
   RegisterFormFirstStepFields,
   registerFormFirstStepConfig
-} from '../models/register-form.models';
+} from '../register-form.models';
 
 import classes from './register-form-steps.scss';
 

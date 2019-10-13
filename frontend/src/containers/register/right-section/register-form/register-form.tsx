@@ -9,10 +9,10 @@ import {
   RegisterFormFirstStepFields,
   RegisterFormSecondStepFields,
   RegisterFormStepsCache
-} from './models/register-form.models';
+} from './register-form.models';
 import RegisterFormFirstStep from './steps/register-form-first-step';
 import RegisterFormSecondStep from './steps/register-form-second-step';
-import { useApiWithAlert } from 'src/api/useAPI/useAPI';
+import { useApiWithAlert } from 'src/api/hooks/useAPI';
 
 const RegisterForm = () => {
   const [step, setStep] = useState(0);

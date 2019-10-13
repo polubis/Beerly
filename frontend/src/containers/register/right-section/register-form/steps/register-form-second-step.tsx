@@ -13,7 +13,7 @@ import FormField, {
 import {
   registerFormSecondStepConfig,
   RegisterFormSecondStepFields
-} from '../models/register-form.models';
+} from '../register-form.models';
 
 import classes from './register-form-steps.scss';
 

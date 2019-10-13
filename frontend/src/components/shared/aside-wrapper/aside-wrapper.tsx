@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 
 import Logo from 'ui/logo/logo';
@@ -6,7 +6,7 @@ import Logo from 'ui/logo/logo';
 import classes from './aside-wrapper.scss';
 
 type AsideWrapperProps = {
-  children: any;
+  children: ReactNode;
 };
 
 export default ({ children }: AsideWrapperProps) => (
