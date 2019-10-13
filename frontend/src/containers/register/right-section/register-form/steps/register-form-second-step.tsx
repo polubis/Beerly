@@ -4,7 +4,12 @@ import DateRangeIcon from '@material-ui/icons/DateRange';
 
 import Button from 'ui/button/button';
 import Checkbox from 'ui/checkbox/checkbox';
-import FormField, { useForm, FieldsValues, extractValuesFromState, ValidationStrategy } from 'components/shared/form';
+import FormField, {
+  useForm,
+  FieldsValues,
+  extractValuesFromState,
+  ValidationStrategy
+} from 'components/shared/form';
 import {
   registerFormSecondStepConfig,
   RegisterFormSecondStepFields
@@ -26,7 +31,7 @@ const RegisterFormSecondStep = ({
   const { state, handleChange, handleSubmit } = useForm<RegisterFormSecondStepFields>(
     registerFormSecondStepConfig,
     onSuccessSubmit,
-    cachedValues,
+    { dateOfBirth: '1994-02-11', subscriptionConfirmation: true, policyConfirmation: true },
     ValidationStrategy.AfterSubmit
   );
 
@@ -34,7 +39,7 @@ const RegisterFormSecondStep = ({
 
   return (
     <>
-      <h3 onClick={() => onBack(extractValuesFromState(state))}>Review and confirm</h3>
+      <h3>Review and confirm</h3>
 
       <form
         className={[classes['register-form'], classes['register-form-second-step']].join(' ')}
@@ -83,6 +88,13 @@ const RegisterFormSecondStep = ({
         </section>
 
         <Button content="Create account" disabled={errorsOccured} />
+        <Button
+          onClick={() => onBack(extractValuesFromState(state))}
+          content="Back"
+          type="button"
+          variant="back-outlined"
+          animation="none"
+        />
       </form>
     </>
   );

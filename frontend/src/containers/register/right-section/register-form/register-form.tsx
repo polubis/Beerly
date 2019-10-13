@@ -20,7 +20,9 @@ const RegisterForm = () => {
 
   const { isSending, handleApiCall } = useApiWithAlert<AccountCreationPayload, null>(
     accountsService.create,
-    res => console.log(res.data)
+    res => console.log(res.data),
+    undefined,
+    { responseDelay: 4000 }
   );
 
   const handleFirstStepSubmit = (fields: FieldsValues<RegisterFormFirstStepFields>) => {

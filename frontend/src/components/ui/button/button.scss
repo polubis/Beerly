@@ -7,6 +7,7 @@
   font-size: 14px;
   min-height: 44px;
   border-radius: 2px;
+  position: relative;
 
   span {
     z-index: 1;
@@ -35,6 +36,12 @@
     &::before {
       background: $main;
     }
+  }
+
+  &-back-outlined {
+    color: $main;
+    border: 1px solid $main;
+    text-transform: uppercase;
   }
 
   &-default {
@@ -73,7 +80,6 @@
 
   &-animated-background {
     overflow: hidden;
-    position: relative;
 
     &::before {
       content: '';

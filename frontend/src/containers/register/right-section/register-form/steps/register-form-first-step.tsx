@@ -26,17 +26,19 @@ const RegisterFormFirstStep = ({ onSuccessSubmit, cachedValues }: RegisterFormFi
   } = useForm<RegisterFormFirstStepFields>(
     registerFormFirstStepConfig,
     onSuccessSubmit,
-    cachedValues,
+    {
+      username: 'polubik1994',
+      email: 'polubik1994@gmail.com',
+      password: 'example-password1994',
+      repeatedPassword: 'example-password1994'
+    },
     ValidationStrategy.AfterSubmit
   );
 
   return (
     <>
       <h3>Sign up</h3>
-      <form
-        className={[classes['register-form'], classes['register-form-first-step']].join(' ')}
-        onSubmit={handleSubmit}
-      >
+      <form className={[classes['register-form']].join(' ')} onSubmit={handleSubmit}>
         <FormField
           autoFocus
           title="Username *"

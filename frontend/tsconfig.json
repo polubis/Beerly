@@ -34,6 +34,7 @@
       "services/*": ["src/api/services/*"],
       "helpers/*": ["src/helpers/*"],
       "models/*": ["src/models/*"],
+      "utils/*": ["src/utils/*"],
     }
   },
   "include": ["src", "typings", "config/setup.jest.ts"],

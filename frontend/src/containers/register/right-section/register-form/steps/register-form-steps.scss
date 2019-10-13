@@ -5,6 +5,12 @@
   flex-flow: column;
   height: calc(100% - 60px);
 
+  &.register-form-second-step {
+    button:last-of-type {
+      margin-top: 15px;
+    }
+  }
+
   .promotions,
   .policy {
     display: flex;
@@ -17,6 +23,10 @@
     }
   }
 
+  .policy {
+    margin-bottom: 30px;
+  }
+
   .divider {
     width: 30px;
     height: 1px;
@@ -24,7 +34,7 @@
     background: $main;
   }
 
-  button {
+  button:first-of-type {
     margin-top: auto;
   }
 }

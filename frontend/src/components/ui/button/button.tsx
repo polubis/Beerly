@@ -4,7 +4,7 @@ import classes from './button.scss';
 
 type ButtonProps = {
   content: string | JSX.Element;
-  variant?: 'circled' | 'default' | 'outlined-red-white';
+  variant?: 'circled' | 'default' | 'outlined-red-white' | 'back-outlined';
   animation?: 'background' | 'none';
 } & ButtonHTMLAttributes<HTMLButtonElement>;
 

@@ -3,6 +3,7 @@
 interface CssExports {
   'btn': string;
   'btn-animated-background': string;
+  'btn-back-outlined': string;
   'btn-circled': string;
   'btn-default': string;
   'btn-outlined-red-white': string;

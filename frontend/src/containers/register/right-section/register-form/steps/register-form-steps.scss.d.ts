@@ -5,6 +5,7 @@ interface CssExports {
   'policy': string;
   'promotions': string;
   'register-form': string;
+  'register-form-second-step': string;
 }
 declare var cssExports: CssExports;
 export = cssExports;
