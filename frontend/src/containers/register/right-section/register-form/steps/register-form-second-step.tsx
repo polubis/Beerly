@@ -39,7 +39,7 @@ const RegisterFormSecondStep = ({
 
   return (
     <>
-      <h3>Review and confirm</h3>
+      <h5>Review and confirm</h5>
 
       <form
         className={[classes['register-form'], classes['register-form-second-step']].join(' ')}

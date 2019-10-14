@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 
 import accountsService from 'services/accounts-service';
 
 import { AccountCreationPayload } from 'src/api/models/payloads/account-creation-payload';
+import AfterRegisterModal from '../after-register-modal/after-register-modal';
 import Loader from 'ui/loader/loader';
 import { FieldsValues } from 'components/shared/form';
 import {
@@ -17,10 +18,11 @@ import { useApiWithAlert } from 'src/api/hooks/useAPI';
 const RegisterForm = () => {
   const [step, setStep] = useState(0);
   const [formStepsCache, setFormStepsCache] = useState(new RegisterFormStepsCache());
+  const [isAfterRegisterModalOpen, setIsAfterRegisterModalOpen] = useState(false);
 
   const { isSending, handleApiCall } = useApiWithAlert<AccountCreationPayload, null>(
     accountsService.create,
-    res => console.log(res.data),
+    res => setIsAfterRegisterModalOpen(true),
     undefined,
     { responseDelay: 4000 }
   );
@@ -39,6 +41,10 @@ const RegisterForm = () => {
     setStep(prevStep => prevStep - 1);
   };
 
+  const closeAfterRegisterModal = useCallback(() => {
+    setIsAfterRegisterModalOpen(false);
+  }, []);
+
   return (
     <>
       {isSending && <Loader overlayed />}
@@ -55,6 +61,11 @@ const RegisterForm = () => {
           cachedValues={formStepsCache[1]}
         />
       )}
+
+      <AfterRegisterModal
+        onCloseAfterRegisterModal={closeAfterRegisterModal}
+        isAfterRegisterModalOpen={isAfterRegisterModalOpen}
+      />
     </>
   );
 };

@@ -1,0 +1,38 @@
+@import '~styles/colors';
+@import '~styles/variables';
+
+.after-register-modal {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  padding: 70px 40px 50px 40px;
+  width: 520px;
+
+  h5 {
+    margin: 30px 0 11px 0;
+
+    b {
+      color: $red;
+      font-weight: $f-bold;
+    }
+  }
+
+  .divider {
+    width: 60px;
+    height: 1px;
+    background: $main;
+    display: block;
+    margin: 44px 0;
+  }
+
+  .description {
+    font-size: 18px;
+    text-align: center;
+    line-height: 24px;
+  }
+
+  button {
+    width: 200px;
+    margin-top: 100px;
+  }
+}

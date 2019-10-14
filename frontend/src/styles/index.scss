@@ -1,5 +1,4 @@
 @import './colors';
-@import './resets';
 @import './variables';
 
 html {
@@ -20,5 +19,58 @@ body {
 
   #root {
     min-height: 100vh;
+  }
+
+  margin: 0;
+  padding: 0;
+
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  b {
+    font-weight: $f-regular;
+  }
+
+  p,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  ul,
+  ol,
+  figure {
+    margin: 0;
+    padding: 0;
+  }
+
+  ul {
+    list-style-type: none;
+  }
+
+  button,
+  input {
+    &:focus {
+      outline: none;
+    }
+  }
+
+  button {
+    font-family: $f-montserrat, 'sans-serif';
+    background: none;
+    border: none;
+    display: block;
+    padding: 0;
+    cursor: pointer;
+
+    &:disabled {
+      cursor: initial;
+    }
+  }
+
+  h5 {
+    font-size: 22px;
   }
 }

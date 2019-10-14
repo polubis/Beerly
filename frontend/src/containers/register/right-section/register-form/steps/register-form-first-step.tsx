@@ -37,7 +37,7 @@ const RegisterFormFirstStep = ({ onSuccessSubmit, cachedValues }: RegisterFormFi
 
   return (
     <>
-      <h3>Sign up</h3>
+      <h5>Sign up</h5>
       <form className={[classes['register-form']].join(' ')} onSubmit={handleSubmit}>
         <FormField
           autoFocus
