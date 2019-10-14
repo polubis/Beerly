@@ -2,7 +2,7 @@ import React, { useState, useCallback } from 'react';
 
 import accountsService from 'services/accounts-service';
 
-import { AccountCreationPayload } from 'src/api/models/payloads/account-creation-payload';
+import { AccountCreationPayload } from 'src/api/models/payloads';
 import AfterRegisterModal from '../after-register-modal/after-register-modal';
 import Loader from 'ui/loader/loader';
 import { FieldsValues } from 'components/shared/form';

@@ -20,12 +20,17 @@ accountsController.post('', async (req: Request, res: Response, next: NextFuncti
 });
 
 accountsController.delete('/:id', async (req: Request, res: Response, next: NextFunction) => {
-  if (!req.session.passport || +req.session.passport.user !== +req.params.id) {
+  if (!req.session.passport) {
+    return next(new Unauthorized('No access allowed'));
+  }
+
+  if (req.session.passport.user === undefined) {
     return next(new Unauthorized('No access allowed'));
   }
 
   try {
     await accountsService.deleteAccount(+req.params.id);
+    req.logOut();
     parseSuccess(req, res, undefined);
   } catch (error) {
     return next(error);

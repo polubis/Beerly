@@ -10,7 +10,6 @@ authorizationController.post('/login', (req: Request, res: Response, next: NextF
   if (req.session.passport && req.session.passport.user !== undefined) {
     return next(new Forbidden('Your session is still active'));
   }
-
   passport.authenticate('local', async (error: any, user: any, info: any) => {
     if (error) {
       return next(error);
@@ -25,10 +24,7 @@ authorizationController.post('/login', (req: Request, res: Response, next: NextF
 });
 
 authorizationController.post('/logout', async (req: Request, res: Response, next: NextFunction) => {
-  if (!req.session.passport) {
-    return next(new Unauthorized('No access allowed'));
-  }
-  if (req.session.passport.user === undefined) {
+  if (!req.session.passport || req.session.passport.user === undefined) {
     return next(new Unauthorized('No access allowed'));
   }
   try {

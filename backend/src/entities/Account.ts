@@ -20,14 +20,6 @@ export class Account extends Base {
   })
   public password: string;
 
-  @Column({
-    nullable: true
-  })
-  public confirmationLink: string;
-
-  @Column()
-  public accountRequestDate: Date;
-
   @OneToOne(type => User, { cascade: true, onDelete: 'CASCADE' })
   @JoinColumn()
   public user: User;
