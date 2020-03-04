@@ -1,0 +1,27 @@
+@import '~styles/colors';
+
+.rates {
+  display: flex;
+  align-items: center;
+
+  .colored {
+    color: $red;
+  }
+
+  &.default {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+
+    svg {
+      margin-left: 4px;
+      font-size: 22px;
+    }
+  }
+
+  &.small {
+    svg {
+      font-size: 18px;
+    }
+  }
+}

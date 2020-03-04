@@ -1,0 +1,14 @@
+.avatar {
+  display: flex;
+  justify-content: center;
+  
+  &.small {
+    height: 50px;
+    width: 50px;
+  }
+
+  img {
+    max-height: 100%;
+    max-width: 100%;
+  }
+}

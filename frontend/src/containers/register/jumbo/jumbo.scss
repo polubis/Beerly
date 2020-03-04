@@ -1,0 +1,50 @@
+@import '~styles/colors';
+@import '~styles/variables';
+
+.jumbo {
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  max-width: 600px;
+  height: 100vh;
+  color: $white;
+  margin-left: 160px;
+
+  strong,
+  h3,
+  p {
+    text-shadow: $text-shadow;
+  }
+
+  strong {
+    font-size: 20px;
+  }
+
+  h3 {
+    font-size: 52px;
+    margin: 20px 0 30px 0;
+  }
+
+  .paragraphs {
+    position: relative;
+    margin-bottom: 60px;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: -40px;
+      top: 0;
+      height: 100%;
+      width: 1px;
+      background: $white;
+    }
+
+    p {
+      font-size: 18px;
+
+      &:not(:last-of-type) {
+        margin-bottom: 20px;
+      }
+    }
+  }
+}
