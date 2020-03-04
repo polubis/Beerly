@@ -1,0 +1,79 @@
+@import '~styles/colors';
+@import '~styles/variables';
+@import '~styles/media';
+
+.alert {
+  position: fixed;
+  bottom: 15px;
+  width: 450px;
+  padding: 15px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  border-radius: 2px;
+  z-index: 2;
+  box-shadow: $bold-shadow;
+  cursor: pointer;
+
+  @media #{$mobile-only} {
+    width: 94%;
+  }
+
+  &-error {
+    background: $red;
+    color: $white;
+  }
+
+  &-animated-in {
+    animation: alert-animated-in 0.3s $transition forwards;
+
+    @keyframes alert-animated-in {
+      from {
+        opacity: 0;
+        transform: translateY(15px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  }
+
+  &-animated-out {
+    animation: alert-animated-out 0.3s $transition forwards;
+
+    @keyframes alert-animated-out {
+      from {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      to {
+        opacity: 0;
+        transform: translateY(15px);
+      }
+    }
+  }
+
+  &-animated-in-out {
+    animation: alert-animated-in-out 0.4s $transition forwards;
+
+    @keyframes alert-animated-in-out {
+      0% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      50% {
+        opacity: 0;
+        transform: translateY(15px);
+      }
+
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  }
+}

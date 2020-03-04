@@ -1,0 +1,17 @@
+.left {
+  width: 60%;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  position: relative;
+
+  .banner {
+    background: url('../../../../public/images/bootle.jpg');
+    position: absolute;
+    background-attachment: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+  }
+}

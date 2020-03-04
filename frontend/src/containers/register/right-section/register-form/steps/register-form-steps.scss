@@ -1,0 +1,40 @@
+@import '~styles/colors';
+
+.register-form {
+  display: flex;
+  flex-flow: column;
+  height: calc(100% - 60px);
+
+  &.register-form-second-step {
+    button:last-of-type {
+      margin-top: 15px;
+    }
+  }
+
+  .promotions,
+  .policy {
+    display: flex;
+    align-items: center;
+
+    & > span {
+      margin-left: 22px;
+      font-size: 14px;
+      line-height: 19px;
+    }
+  }
+
+  .policy {
+    margin-bottom: 30px;
+  }
+
+  .divider {
+    width: 30px;
+    height: 1px;
+    margin: 20px 0 20px 48px;
+    background: $main;
+  }
+
+  button:first-of-type {
+    margin-top: auto;
+  }
+}

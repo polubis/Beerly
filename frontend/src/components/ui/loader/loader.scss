@@ -1,0 +1,224 @@
+@import '~styles/colors';
+@import '~styles/variables';
+
+.loader {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 3;
+
+  &-overlayed {
+    &::before {
+      content: '';
+      width: 200%;
+      height: 200%;
+      position: absolute;
+      border-radius: 50%;
+      top: -50%;
+      left: -50%;
+      background: $white;
+      will-change: transform;
+      animation: overlay-in 1s $transition forwards;
+
+      @keyframes overlay-in {
+        from {
+          transform: scale(0);
+        }
+        to {
+          transform: scale(1);
+        }
+      }
+    }
+  }
+
+  .glass {
+    height: 80px;
+    border: 5px solid $main;
+    border-top: none;
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+    width: 55px;
+    box-shadow: $thin-shadow;
+    background: $white;
+    position: relative;
+    overflow: hidden;
+    animation: fade-in 0.6s $transition forwards;
+    will-change: opacity;
+
+    @keyframes fade-in {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    &::before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 86%;
+      background: $orange;
+      animation: animate-beer-content 2s $transition forwards;
+      will-change: transform;
+
+      @keyframes animate-beer-content {
+        from {
+          transform: translateY(100%);
+        }
+        to {
+          transform: translateY(0);
+        }
+      }
+    }
+
+    .foam {
+      position: absolute;
+      animation: animate-foam 0.9s $transition forwards;
+      animation-delay: 0.8s;
+      will-change: transform;
+      top: 0;
+      box-shadow: $thin-shadow;
+      border-radius: 10px;
+      z-index: 1;
+      transform: translateY(-30px) scale(0.6);
+      background: $white;
+      width: 10px;
+
+      @keyframes animate-foam {
+        from {
+          transform: translateY(-30px) scale(0.6);
+        }
+        to {
+          transform: translateY(0) scale(1);
+        }
+      }
+
+      &:nth-of-type(1) {
+        left: -10px;
+        height: 20px;
+        width: 20px;
+      }
+
+      &:nth-of-type(2) {
+        left: 10px;
+        height: 15px;
+      }
+
+      &:nth-of-type(3) {
+        left: 20px;
+        height: 30px;
+      }
+
+      &:nth-of-type(4) {
+        left: 30px;
+        height: 22px;
+      }
+
+      &:nth-of-type(5) {
+        left: 40px;
+        height: 15px;
+      }
+    }
+
+    .bubble {
+      position: absolute;
+      background: $white;
+      border-radius: 50%;
+      width: 6px;
+      height: 6px;
+      bottom: 0;
+      animation: animate-bubble $transition infinite;
+      will-change: transform;
+      transform: translateY(0);
+
+      &:nth-of-type(1) {
+        animation-duration: 3.4s;
+        left: 5px;
+      }
+
+      &:nth-of-type(2) {
+        animation-duration: 2.51s;
+        left: 5px;
+      }
+
+      &:nth-of-type(3) {
+        animation-duration: 2.99s;
+        left: 5px;
+      }
+
+      &:nth-of-type(4) {
+        left: 15px;
+        animation-duration: 3.22s;
+      }
+
+      &:nth-of-type(5) {
+        left: 15px;
+        animation-duration: 2.45s;
+      }
+
+      &:nth-of-type(6) {
+        left: 15px;
+        animation-duration: 3.02s;
+      }
+
+      &:nth-of-type(7) {
+        left: 25px;
+        animation-duration: 2.11s;
+      }
+
+      &:nth-of-type(8) {
+        left: 25px;
+        animation-duration: 2.33s;
+      }
+
+      &:nth-of-type(9) {
+        left: 25px;
+        animation-duration: 2.88s;
+      }
+
+      &:nth-of-type(10) {
+        left: 35px;
+        animation-duration: 3s;
+      }
+
+      &:nth-of-type(11) {
+        left: 35px;
+        animation-duration: 3.33s;
+      }
+
+      &:nth-of-type(12) {
+        left: 35px;
+        animation-duration: 2.55s;
+      }
+
+      @keyframes animate-bubble {
+        from {
+          transform: translateY(10px);
+        }
+        to {
+          transform: translateY(-70px);
+        }
+      }
+    }
+  }
+
+  .handle {
+    border: 5px solid $main;
+    background: $white;
+    height: 50px;
+    width: 25px;
+    transform: translateX(-5px);
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    box-shadow: $thin-shadow;
+  }
+}

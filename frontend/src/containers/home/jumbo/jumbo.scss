@@ -1,0 +1,88 @@
+@import '~styles/colors';
+@import '~styles/media';
+@import '~styles/variables';
+
+/* --- HELPERS --- */
+
+.perf-flex {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* --- END HELPERS --- */
+
+.jumbo {
+  min-height: calc(100vh - 150px); // navbar = 100px, space for next section = 50px
+  padding: 100px 35px;
+  margin: 0 auto;
+  @extend .perf-flex;
+  justify-content: space-between;
+
+  &__text {
+    display: flex;
+    flex-flow: column;
+    width: 500px;
+
+    ul {
+      position: relative;
+
+      li {
+        display: flex;
+        align-items: center;
+        &:not(:last-of-type) {
+          margin-bottom: 30px;
+        }
+
+        button {
+          width: 50px;
+          height: 50px;
+          border-radius: 50px;
+          flex-shrink: 0;
+          background: $main;
+          margin-right: 22px;
+          color: $white;
+          font-weight: $f-light;
+          box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+          @extend .perf-flex;
+        }
+
+        span {
+          font-size: 18px;
+          color: $main;
+        }
+      }
+
+      & > svg {
+        position: absolute;
+        z-index: -1;
+        width: 100%;
+        left: 0;
+      }
+    }
+  }
+
+  /* --- MEDIA --- */
+
+  @media #{$desktop-only} {
+    width: 1280px;
+  }
+
+  @media #{$not-desktop} {
+    &__text {
+      margin-right: 100px;
+    }
+  }
+
+  @media #{$tablet-and-mobile} {
+    flex-flow: column;
+    width: 100%;
+
+    &__text {
+      margin: 0 0 80px 0;
+      width: 100%;
+    }
+  }
+
+  /* --- END MEDIA --- */
+}

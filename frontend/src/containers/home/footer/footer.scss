@@ -1,0 +1,142 @@
+@import '~styles/colors';
+@import '~styles/media';
+@import '~styles/variables';
+
+$email-input-color: #de656a;
+$email-button-color: rgba(222, 101, 106, 0.74);
+
+.footer {
+  background: $black;
+  color: $white;
+
+  .content,
+  .bottom-content {
+    margin: 0 auto;
+    max-width: 1280px;
+  }
+
+  .content {
+    padding: 50px 35px 50px 35px;
+    display: grid;
+    grid-gap: 50px;
+
+    @media #{$desktop-only} {
+      grid-template-columns: 2fr 3fr 1fr;
+    }
+
+    @media #{$not-desktop} {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    @media #{$tablet-and-mobile} {
+      grid-template-columns: 1fr;
+    }
+
+    .email-input {
+      margin-top: 30px;
+      border: 1px solid $email-input-color;
+      border-radius: 2px;
+      display: flex;
+      width: 350px;
+      height: 52px;
+      position: relative;
+
+      @media #{$mobile-only} {
+        width: 100%;
+      }
+
+      input {
+        border: none;
+        background: none;
+        width: calc(100% - 102px);
+        font-family: inherit;
+        font-size: 15px;
+
+        &::placeholder {
+          color: $white;
+          font-weight: $f-light;
+        }
+      }
+
+      button {
+        font-size: 18px;
+        width: 102px;
+        position: absolute;
+        font-weight: $f-light;
+        background: $email-button-color;
+        color: $white;
+        height: 52px;
+        right: -1px;
+        bottom: -1px;
+      }
+
+      input {
+        color: $white;
+        padding: 14px 28px;
+      }
+    }
+
+    .we-started {
+      display: flex;
+      flex-flow: column;
+
+      .description:last-of-type {
+        margin-top: 10px;
+
+        b {
+          color: $orange;
+        }
+      }
+    }
+
+    .navigate {
+      display: flex;
+      flex-flow: column;
+
+      a {
+        color: $orange;
+        font-size: 14px;
+        padding: 12px 0;
+
+        @media #{$desktop-only} {
+          padding: 0 0 12px 0;
+        }
+      }
+    }
+
+    .title {
+      font-size: 24px;
+      font-weight: $f-bold;
+      margin-bottom: 24px;
+    }
+
+    .description {
+      font-weight: $f-light;
+      font-size: 14px;
+      line-height: 24px;
+      text-align: justify;
+      max-width: 650px;
+    }
+  }
+
+  .bottom-content {
+    display: flex;
+    align-items: center;
+    padding: 0 35px 50px 35px;
+
+    .links {
+      margin-left: auto;
+
+      a {
+        color: $orange;
+        font-weight: $f-bold;
+        font-size: 14px;
+        margin-left: 50px;
+
+        @media #{$tablet-and-mobile} {
+          margin-left: 30px;
+        }
+      }
+    }
+  }
+}

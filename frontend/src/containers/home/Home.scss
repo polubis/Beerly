@@ -1,0 +1,57 @@
+@import '~styles/colors';
+@import '~styles/media';
+
+.home {
+  .section-name-2,
+  .section-name-3,
+  .section-name-4 {
+    width: 100%;
+    padding: 0 35px;
+
+    @media #{$desktop-only} {
+      width: 1280px;
+      margin: 0 auto;
+    }
+  }
+
+  .section-name-3,
+  .section-name-4 {
+    margin-top: 50px;
+  }
+
+  .beers-users {
+    position: relative;
+    padding-bottom: 70px;
+    border-top: 1px solid $medium-blue;
+    border-bottom: 1px solid $medium-blue;
+
+    .light-bg-1,
+    .light-bg-2,
+    .dark-bg {
+      width: 100%;
+      position: absolute;
+      z-index: -1;
+    }
+
+    .light-bg-1,
+    .light-bg-2 {
+      background: $light-blue;
+    }
+
+    .light-bg-1 {
+      height: 300px;
+      bottom: 0;
+    }
+
+    .light-bg-2 {
+      top: 0;
+      height: 290px;
+    }
+
+    .dark-bg {
+      background: $medium-blue;
+      top: 290px;
+      height: 1160px;
+    }
+  }
+}
