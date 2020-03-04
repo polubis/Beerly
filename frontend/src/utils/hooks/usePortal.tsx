@@ -10,6 +10,8 @@ export const usePortal = (): UsePortalReturn => {
     return document.createElement('div');
   }, []);
 
+  console.log('siema');
+
   useEffect(() => {
     rootPortalDiv.appendChild(el);
 

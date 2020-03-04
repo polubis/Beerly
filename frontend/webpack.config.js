@@ -3,12 +3,13 @@ const path = require('path');
 const { TsConfigPathsPlugin } = require('awesome-typescript-loader');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 const InterpolateHtmlPlugin = require('interpolate-html-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 module.exports = (env, { mode }) => {
   console.log(`App is running in ${mode} mode`);
 
   return {
-    devtool: 'eval-source-map',
+    mode,
     entry: './src/index.tsx',
     resolve: {
       extensions: ['.ts', '.tsx', '.js', 'json'],
@@ -82,7 +83,8 @@ module.exports = (env, { mode }) => {
       }),
       new InterpolateHtmlPlugin({
         PUBLIC_URL: 'public'
-      })
+      }),
+      new BundleAnalyzerPlugin()
     ],
     devServer: {
       historyApiFallback: true,
